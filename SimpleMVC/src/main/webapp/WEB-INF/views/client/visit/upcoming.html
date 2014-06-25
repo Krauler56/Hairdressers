@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+	<title>Home</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<script type="text/javascript" th:src="@{/js/jquery-2.1.1.min.js}"></script> 
+	<script type="text/javascript" th:src="@{/js/jquery.tablesorter.min.js}"></script> 
+	<script type="text/javascript" th:src="@{/js/jquery.tablesorter.pager.min.js}"></script> 
+	<script type="text/javascript" th:src="@{/js/jquery.tablesorter.widgets.min.js}"></script> 
+	<script type="text/javascript" th:src="@{/js/moj.js}"></script>
+	<link rel="stylesheet" type="text/css" media="all" href="../../css/moj.css" th:href="@{/css/moj.css}" />
+</head>
+<body>
+	<div th:include="include/fragment :: header"></div>
+	<div id="content">
+		<div th:include="include/fragment :: client_visits"></div>
+			
+			<p th:if="${newVisitAdded == true}" th:text="#{newVisitAdded}" class="greenText"></p>
+			<p th:if="${noPlacesToSelect == true}" th:text="#{noPlacesToSelect}" class="error"></p>
+			<h3 th:text="#{upcoming_visits}">Upcoming visits</h3>
+			<p th:if="${#lists.isEmpty(clientVisits)}"  th:text="#{no_visits}">No visits</p>
+			
+			<div th:if="${not #lists.isEmpty(clientVisits)}">
+				<table class="tablesorter tables" id="upcomingVisitsClient">
+					<thead>
+						<tr>
+							<th th:text="#{date}">Date</th>
+							<th th:text="#{time}">Time</th>
+							<th th:text="#{where}">Where</th>
+							<th th:text="#{employee}">Employee</th>
+							<th th:text="#{action}">Action</th>
+						</tr>
+					</thead>
+					<tfoot>
+						<tr>
+							<th th:text="#{date}">Date</th>
+							<th th:text="#{time}">Time</th>
+							<th th:text="#{where}">Where</th>
+							<th th:text="#{employee}">Employee</th>
+							<th th:text="#{action}">Action</th>
+						</tr>
+					</tfoot>
+					<tbody>
+						<tr th:each="visit : ${clientVisits}">
+							<td th:text="${#calendars.format(visit.startDate, 'dd-MM-yyyy')}"></td>
+							<td th:text="${#calendars.format(visit.startDate, 'HH:mm')}"></td>
+							<td class="link"><a href="#" th:href="@{/place/__${visit.placeID}__}" th:text="${visit.placeName}" ></a></td>
+							<td class="link"><a href="#" th:href="@{/employee/__${visit.employeeID}__}" th:text="${visit.employeeName}" ></a></td>
+							<td> 
+								<form th:onsubmit="#{js.confirm}" action="#" th:action="@{/client/visit/__${visit.id}__/cancel}" method="post">
+									<input class="button gray small" type="submit" th:value="#{cancel_visit}"/>
+								</form>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div th:include="include/fragment :: pager(${#lists.size(clientVisits)})"></div>
+			</div>
+			
+	</div>
+</body>
+</html>

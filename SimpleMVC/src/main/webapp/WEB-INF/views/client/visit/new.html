@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+	<title>Home</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<script type="text/javascript" th:src="@{/js/jquery-2.1.1.min.js}"></script> 
+	<script type="text/javascript" th:src="@{/js/jquery.tablesorter.min.js}"></script> 
+	<script type="text/javascript" th:src="@{/js/jquery.tablesorter.pager.min.js}"></script> 
+	<script type="text/javascript" th:src="@{/js/jquery.tablesorter.widgets.min.js}"></script> 
+	<script type="text/javascript" th:src="@{/js/moj.js}"></script>
+	<link rel="stylesheet" type="text/css" media="all" href="../../css/moj.css" th:href="@{/css/moj.css}" />
+</head>
+<body>
+	<div th:include="include/fragment :: header"></div>
+	<div id="content">
+		<div th:include="include/fragment :: client_visits"></div>
+
+		<div>
+			<span th:if="${newVisitFailed == true}" th:text="#{newVisitFailed}" class="error"></span>
+			<h2 th:text="#{select_place}">Select place</h2>
+
+			<form th:if="${allPlaces} != null" action="#" th:action="@{/selectPlace}" method="post">
+				<table class="tablesorter tables" id="selectPlace">
+					<thead>
+						<tr>
+							<th th:text="#{name}">Name</th>
+							<th th:text="#{address}">Address</th>
+							<th th:text="#{city}">City</th>
+							<th th:text="#{open_hours}">Open hours</th>
+							<th th:text="#{choose}">Choose</th>
+						</tr>
+					</thead>
+					<tbody>	
+						<tr th:each="place : ${allPlaces}">
+							<td th:text="${place.name}"></td>
+							<td th:text="|${place.buildingNumber}/${place.doorNumber}  ${place.street}|"></td>
+							<td th:text="|${place.city}  ${place.postCode}|" ></td>
+							<td th:text="|${place.openFrom} - ${place.openTo}|"></td>
+							<td><input type="radio" th:value="${place.id}" name="placeID" required="required" /></td>
+						</tr>
+					</tbody>
+				</table>
+				
+				<br/>
+				<input class="button orange" type="submit" th:value="#{next}" />
+				
+			</form>
+		</div>
+
+	</div>
+</body>
+</html>

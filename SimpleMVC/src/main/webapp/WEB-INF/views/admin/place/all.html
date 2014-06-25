@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+	<title>Home</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<script type="text/javascript" th:src="@{/js/jquery-2.1.1.min.js}"></script> 
+	<script type="text/javascript" th:src="@{/js/jquery.tablesorter.min.js}"></script> 
+	<script type="text/javascript" th:src="@{/js/jquery.tablesorter.pager.min.js}"></script> 
+	<script type="text/javascript" th:src="@{/js/jquery.tablesorter.widgets.min.js}"></script> 
+	<script type="text/javascript" th:src="@{/js/moj.js}"></script>
+	<link rel="stylesheet" type="text/css" media="all" href="../../css/moj.css" th:href="@{/css/moj.css}" />
+</head>
+<body>
+	<div th:include="include/fragment :: header"></div>
+	<div id="content">
+		<div class="content_nav">
+			<a class="button orange small" th:href="@{/admin/place/new}" th:text="#{create_new_place}">Create new place</a>
+		</div>
+		<h3 th:text="#{all_places}">All places</h3>
+		<div th:if="${not #lists.isEmpty(allPlaces)}">
+			<table class="tablesorter tables" id="places">
+				<thead>
+					<tr>
+						<th th:text="#{name}">Name</th>
+						<th th:text="#{address}">Address</th>
+						<th th:text="#{city}">City</th>
+						<th th:text="#{open_hours}">Open hours</th>
+						<th th:text="#{action}">Action</th>
+					</tr>
+				</thead>
+				<tfoot>
+					<tr>
+						<th th:text="#{name}">Name</th>
+						<th th:text="#{address}">Address</th>
+						<th th:text="#{city}">City</th>
+						<th th:text="#{open_hours}">Open hours</th>
+						<th th:text="#{action}">Action</th>
+					</tr>
+				</tfoot>
+				<tbody>
+					<tr th:each="place : ${allPlaces}">
+						<td th:text="${place.name}"></td>
+						<td th:text="|${place.buildingNumber}/${place.doorNumber}  ${place.street}|"></td>
+						<td th:text="|${place.city}  ${place.postCode}|" ></td>
+						<td th:text="|${place.openFrom} - ${place.openTo}|"></td>
+						<td>
+							<a class="button gray small" th:href="@{/admin/place/__${place.id}__/edit}" th:text="#{edit}">Edit</a>
+							<a class="button gray small" th:href="@{/admin/place/__${place.id}__/employees}" th:text="#{employees}">Employees</a>
+							<a class="button gray small" th:href="@{/admin/place/__${place.id}__/visits}" th:text="#{visits}">Visits</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div th:include="include/fragment :: pager(${#lists.size(allPlaces)})"></div>
+		</div>
+	
+	</div>
+</body>
+</html>

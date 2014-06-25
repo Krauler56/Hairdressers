@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+	<title>Home</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<script type="text/javascript" th:src="@{/js/jquery-2.1.1.min.js}"></script> 
+	<script type="text/javascript" th:src="@{/js/jquery.tablesorter.min.js}"></script> 
+	<script type="text/javascript" th:src="@{/js/jquery.tablesorter.pager.min.js}"></script> 
+	<script type="text/javascript" th:src="@{/js/jquery.tablesorter.widgets.min.js}"></script> 
+	<script type="text/javascript" th:src="@{/js/moj.js}"></script>
+	<link rel="stylesheet" type="text/css" media="all" href="../../css/moj.css" th:href="@{/css/moj.css}" />
+</head>
+<body>
+	<div th:include="include/fragment :: header"></div>
+	<div id="content">
+		<div class="content_nav">
+			<a class="button orange small" th:href="@{/__${prevPage}__}" th:text="#{back}">Back</a>
+		</div>	
+		<h2 th:text="#{past_visits}">Past visits</h2>
+		<div th:include="include/fragment :: visits_table"></div>
+	</div>
+</body>
+</html>

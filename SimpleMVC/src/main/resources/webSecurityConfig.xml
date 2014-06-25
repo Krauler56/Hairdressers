@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="
+      http://www.springframework.org/schema/security 
+      http://www.springframework.org/schema/security/spring-security-3.2.xsd
+      http://www.springframework.org/schema/beans 
+      http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<global-method-security pre-post-annotations="enabled" />
+
+	<http security="none" pattern="/css/**"/>
+	<http security="none" pattern="/images/**"/>
+	<http security="none" pattern="/js/**"/>
+
+	<http use-expressions="true" authentication-manager-ref="authMgr" disable-url-rewriting="true">
+		<intercept-url pattern="/language/*" access="permitAll"  />
+		<intercept-url pattern="/login*" access="isAnonymous()"  />
+		<intercept-url pattern="/register" access="isAnonymous()" />
+		<intercept-url pattern="/**" access="isAuthenticated()" />
+
+		<form-login 
+					login-page="/login" 
+					authentication-failure-url="/login-error" 
+					default-target-url="/"
+					always-use-default-target="true" 
+					/>
+
+		<logout delete-cookies="JSESSIONID"  /> 
+		
+		<session-management>
+        	<concurrency-control max-sessions="1" expired-url="/login-expired" />
+    	</session-management>
+		
+	</http>
+
+	<authentication-manager id="authMgr">
+		<authentication-provider ref="customAuthenticationProvider" />
+	</authentication-manager>
+</beans:beans>

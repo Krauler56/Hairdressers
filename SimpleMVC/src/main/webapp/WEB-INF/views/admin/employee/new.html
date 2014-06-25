@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+	<title>Home</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" media="all" href="../../css/moj.css" th:href="@{/css/moj.css}" />
+	<script type="text/javascript" th:src="@{/js/moj.js}"></script>
+</head>
+<body>
+	<div th:include="include/fragment :: header"></div>
+	<div id="content">
+		<h3 th:text="#{add_new_employee}">Add new employee</h3>
+		<form action="#" th:action="@{/addEmployee}" th:object="${newEmployee}" method="post">
+			<table>
+				<tr>
+					<td th:text="#{login}">Login :</td>
+					<td><input type="text" th:field="*{login}" /></td>
+					<td th:if="${#fields.hasErrors('login')}" th:errors="*{login}" class="error"></td>
+					<td th:if="${uniqe_login}" class="error" th:text="#{login_exist}">Login already exist</td>
+					
+				</tr>
+
+				<tr>
+					<td th:text="#{password}">Password</td>
+					<td><input type="password" th:field="*{password}" /></td>
+					<td th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></td>
+				</tr>
+
+				<tr>
+					<td th:text="#{first_name}">First name</td>
+					<td><input type="text" th:field="*{firstName}" /></td>
+					<td th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="error"></td>
+				</tr>
+
+				<tr>
+					<td th:text="#{last_name}">Last name</td>
+					<td><input type="text" th:field="*{lastName}" /></td>
+					<td th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="error"></td>
+				</tr>
+
+				<tr>
+					<td th:text="#{work_place}">Place of work</td>
+					<td><select th:field="*{idWorkPlace}">
+							<option value="0">None</option>
+							<option th:each="place : ${allPlacesWithVacancy}" th:value="${place.id}" th:text="${place.name}"></option>
+					</select></td>
+				</tr>
+
+				<tr>
+					<td th:text="#{admin}">Admin</td>
+					<td><input type="checkbox" th:field="*{admin}" /></td>
+				</tr>
+
+			</table>
+			<p th:if="${success == false}" th:text="#{add_employee_failed}" class="error"></p>
+			<a class="button orange small" th:href="@{/admin/employees}" th:text="#{cancel}">Cancel</a>
+			<input class="button orange small" type="submit" th:value="#{add}" />
+		</form>
+
+	</div>
+</body>
+</html>

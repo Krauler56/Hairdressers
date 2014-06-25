@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+	<title>Home</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" media="all" href="../../css/moj.css" th:href="@{/css/moj.css}" />
+	<script type="text/javascript" th:src="@{/js/moj.js}"></script>
+</head>
+<body>
+	<div th:include="include/fragment :: header"></div>
+	<div id="content">
+		<h3 th:text="#{rate_visit}">Rate visit: </h3>
+		<form action="#" th:action="@{/client/visit/__${id}__/rate}" th:object="${rateVisit}" method="post">
+				<input type="radio" value="1" name="rate" th:field="*{rate}" required="required" /> <label> 1</label> <br/>
+				<input type="radio" value="2" name="rate" th:field="*{rate}" required="required" /> <label> 2</label> <br/>
+				<input type="radio" value="3" name="rate" th:field="*{rate}" required="required" /> <label> 3</label> <br/>
+				<input type="radio" value="4" name="rate" th:field="*{rate}" required="required" /> <label> 4</label> <br/>
+				<input type="radio" value="5" name="rate" th:field="*{rate}" required="required" /> <label> 5</label> <br/><br/>
+				
+				<a class="button small orange" th:href="@{/client/visit/past}" th:text="#{cancel}">Cancel</a>
+				<input class="button small orange" type="submit" value="Rate" th:value="#{rate_}"/>
+		</form>
+	</div>
+</body>
+</html>

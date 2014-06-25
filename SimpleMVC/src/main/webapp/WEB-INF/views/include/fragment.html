@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+	<title>Home</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" media="all" href="../../css/moj.css" th:href="@{/css/moj.css}" />
+	<script type="text/javascript" th:src="@{/js/moj.js}"></script>
+</head>
+<body>
+
+	<div th:fragment="pager(max)">
+		<div id="pager" class="pager">
+			<form>
+				<img th:src="@{/images/first.png}" class="first" /> 
+				<img th:src="@{/images/prev.png}" class="prev" /> 
+				<span class="pagedisplay"></span>
+				<img th:src="@{/images/next.png}" class="next" /> 
+				<img th:src="@{/images/last.png}" class="last" /> 
+				<select class="pagesize">
+					<option selected="selected" value="5">5</option>
+					<option value="10">10</option>
+					<option value="20">20</option>
+					<option value="50">50</option>
+					<option th:value="${max}">ALL</option>
+				</select>
+			</form>
+		</div>
+	</div>
+	
+	<div th:fragment="order_visit">
+		<p th:if="${dateBeforeNow == true}" class="error" th:text="#{date_before_now}"></p>
+		<div th:if="${allEmployees != null}">
+			<br />
+			<p th:text="#{select_employee}" class="bold"></p>
+			<table class="tables">
+				<thead>
+					<tr>
+						<th th:text="#{first_name}"></th>
+						<th th:text="#{last_name}"></th>
+						<th th:text="#{avg_rate}"></th>
+						<th th:text="#{choose}"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="employee : ${allEmployees}">
+						<td th:text="${employee.firstName}"></td>
+						<td th:text="${employee.lastName}"></td>
+						<td th:if="${employee.rate != 0.00}" th:text="|${#numbers.formatDecimal(employee.rate,1,2)} / 5.00|"></td>
+						<td th:if="${employee.rate == 0.00}">- / 5.00</td>
+						<td><input type="radio" th:value="${employee.id}" name="employeeID" th:field="*{employeeID}" required="required" /></td>
+					</tr>
+					<tr>
+						<td colspan="3" class="bold" th:text="#{any_employee}">Any employee</td>
+						<td><input type="radio" value="0" name="employeeID" th:field="*{employeeID}" required="required" /></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<br />
+		<table id="newVisit">
+			<tr>
+				<td th:text="#{select_date}" class="bold">Select date:</td>
+				<td>
+					<input th:field="*{date}" type="date" th:min="${minDate}" required="required" />  
+<!-- 					<input th:field="*{date}" type="date" required="required" /> -->
+				</td>
+			</tr>
+
+			<tr>
+				<td th:text="#{select_time}" class="bold">Select time:</td>
+				<td><input th:field="*{startTime}" type="time" step="900" th:min="${workPlace.openFrom}" th:max="${workPlace.openTo}" required="required" /></td>
+			</tr>
+
+			<tr>
+				<td th:text="#{select_hair}" class="bold">Select type of hair:</td>
+				<td>
+					<div class="alginLeft">
+						<input type="radio" value="SHORT" name="hairType" th:field="*{hairType}" required="required" /> <label th:text="#{short}"> short</label> <br /> <input type="radio" value="MEDIUM" name="hairType" th:field="*{hairType}" required="required" /> <label
+							th:text="#{medium}"> medium</label> <br /> <input type="radio" value="LONG" name="hairType" th:field="*{hairType}" required="required" /> <label th:text="#{long}"> long</label>
+					</div>
+				</td>
+			</tr>
+		</table>
+
+		<input class="button orange" type="submit" value="Check" th:value="#{check}" />
+	</div>
+
+	<div th:fragment="confirm_visit">
+			<div th:if="${dateAvailable == true}">
+				<p th:text="#{date_avaiable}" class="greenText bold">Date you have selected is available</p>
+				<p th:text="|#{date}: ${#calendars.format(startDate, 'dd-MM-yyyy')}|" class="bold"></p>
+				<p th:text="|#{time}: ${#calendars.format(startDate, 'HH:mm')}|" class="bold"></p>
+				
+				<br/>
+				<a class="button orange small" href="javascript:location.reload()"  th:text="#{cancel}">Cancel</a>
+				<input class="button orange small" type="submit" value="Confirm"  th:value="#{confirm}" />
+			</div>
+
+			<div th:if="${dateAvailable == false}">
+				<p th:text="#{date_not_avaiable}" class="error bold">Date you have selected is not available</p>
+				<p th:text="|#{date}: ${#calendars.format(startDate, 'dd-MM-yyyy')}|" class="bold"></p>
+				<p th:text="|#{time}: ${#calendars.format(startDate, 'HH:mm')}|" class="bold"></p>
+				<br/>
+				<p th:text="#{closest_available_dates}" class="bold"></p>
+				<table class="tables">
+					<thead>
+						<tr>
+							<th th:text="#{date}">Date</th>
+							<th th:text="#{time}">Time</th>
+							<th th:text="#{choose}">Choose</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="suggestedDate : ${suggestedDates}">
+							<td th:text="${#calendars.format(suggestedDate.startDate, 'dd-MM-yyyy')}"></td>
+							<td th:text="${#calendars.format(suggestedDate.startDate, 'HH:mm')}"></td>
+							<td><input type="radio" th:value="${suggestedDate.id}" name="suggestedDateID" required="required" /></td>
+						</tr>
+					</tbody>		
+				</table>
+				<br/>
+				<p th:utext="#{suggested_dates_msg}"></p>
+				<br/>
+				<a class="button orange small" href="javascript:location.reload()"  th:text="#{select_other_date}">Select other date</a>
+				<input class="button orange small" type="submit" value="Confirm"  th:value="#{confirm}" />
+			</div>
+	</div>
+
+	<div th:fragment="visits_table">
+		<p th:if="${#lists.isEmpty(visits)}"  th:text="#{no_visits}">No visits</p>
+		<div th:if="${not #lists.isEmpty(visits)}">
+			<table  class="tablesorter tables" id="visitsEmployee">
+				<thead>
+					<tr>
+						<th th:text="#{date}">Date</th>
+						<th th:text="#{time}">Time</th>
+						<th th:text="#{where}">Where</th>
+						<th th:text="#{employee}">Employee</th>
+						<th th:text="#{client}">Client</th>
+						<th th:text="#{rate}">Rate</th>
+						<th th:text="#{action}">Action</th>
+					</tr>
+				</thead>
+				<tfoot>
+					<tr>
+						<th th:text="#{date}">Date</th>
+						<th th:text="#{time}">Time</th>
+						<th th:text="#{where}">Where</th>
+						<th th:text="#{employee}">Employee</th>
+						<th th:text="#{client}">Client</th>
+						<th th:text="#{rate}">Rate</th>
+						<th th:text="#{action}">Action</th>
+					</tr>
+				</tfoot>
+				<tbody>
+					<tr th:each="visit : ${visits}">
+						<td th:text="${#calendars.format(visit.startDate, 'dd-MM-yyyy')}"></td>
+						
+						<td th:text="${#calendars.format(visit.startDate, 'HH:mm')}"></td>
+						
+						<td class="link"><a href="#" th:href="@{/place/__${visit.placeID}__}" th:text="${visit.placeName}"></a></td>
+						
+						<td class="link"><a href="#" th:href="@{/employee/__${visit.employeeID}__}" th:text="${visit.employeeFirstName}"></a></td>
+						
+						<td class="link">
+							<a th:if="${visit.clientID != 0}" href="#" th:href="@{/client/__${visit.clientID}__}" th:text="${visit.clientFirstName}"></a>
+							<span th:if="${visit.clientID == 0}">-</span>
+						</td>
+						
+						<td th:if="${visit.confirmed == false}" th:title="#{waiting_to_be_confirmed}" th:text="#{waiting}">Waiting</td>
+						<td th:if="${visit.confirmed == true}">
+							<span th:if="${visit.rate == 0}" >-</span>
+							<span th:if="${visit.rate != 0}" th:text="${visit.rate}"></span>
+						</td>
+						
+						<td th:if="${pastVisits == true}" >
+	<!-- 						<form th:if="${visit.confirmed == false}" th:action="@{/employee/visit/__${visit.visitID}__/confirm}" method="post"> -->
+	<!-- 							<input class="button small gray" type="submit" th:value="#{confirm}" /> -->
+	<!-- 						</form> -->
+							<div th:if="${visit.confirmed == false}">
+								<form sec:authorize="hasRole('ROLE_EMPLOYEE')" th:action="@{/employee/visit/__${visit.visitID}__/confirm}" method="post">
+									<input class="button small gray" type="submit" th:value="#{confirm}" />
+								</form>
+								<a sec:authorize="hasRole('ROLE_ADMIN')" class="button small gray" th:href="@{/admin/visit/__${visit.visitID}__/confirm}" onclick="confirmVisit(this,event);" th:text="#{confirm}"></a>
+							</div>
+							
+							<span th:if="${visit.confirmed == true}" th:text="#{confirmed}"></span>
+						</td>
+						
+						<td th:if="${pastVisits != true}" >
+							<div sec:authorize="hasRole('ROLE_ADMIN')">
+								<a class="button gray small" th:href="@{/admin/visit/__${visit.visitID}__/cancel}" th:onclick="'deleteVisit(this,event,' +#{delete_visit_text} +');'" th:text="#{cancel_visit}"></a>
+							</div>
+							<div sec:authorize="hasRole('ROLE_EMPLOYEE')">
+								<a th:if="${visit.clientID == 0}" class="button gray small" th:href="@{/employee/visit/__${visit.visitID}__/cancel}"  th:onclick="'deleteVisit(this,event,' +#{delete_visit_text} +');'" th:text="#{cancel_visit}"></a>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div th:include="include/fragment :: pager(${#lists.size(visits)})"></div>
+		</div>
+	</div>
+	
+	<div th:fragment="employees_table">
+		<p th:if="${#lists.isEmpty(allEmployees)}" th:text="#{no_employees}">No employees</p>
+		<div th:if="${not #lists.isEmpty(allEmployees)}">
+			<table class="tablesorter tables" id="employees">
+				<thead>
+					<tr>
+						<th th:text="#{name}">Name</th>
+						<th th:text="#{rate}">Rate</th>
+						<th th:text="#{place}">Place</th>
+						<th th:text="#{action}">Action</th>				
+					</tr>
+				</thead>
+				<tfoot>
+					<tr>
+						<th th:text="#{name}">Name</th>
+						<th th:text="#{rate}">Rate</th>
+						<th th:text="#{place}">Place</th>
+						<th th:text="#{action}">Action</th>				
+					</tr>
+				</tfoot>
+				<tbody>
+					<tr th:each="employee : ${allEmployees}">
+						<td th:text="|${employee.firstName} ${employee.lastName}|"></td>
+						
+						<td th:if="${employee.rate != 0.00}" th:text="|${#numbers.formatDecimal(employee.rate,1,2)} / 5.00|" ></td>
+						<td th:if="${employee.rate == 0.00}">- / 5.00</td>
+						
+						<td th:text="${employee.placeName}"></td>
+						<td>
+							<a class="button gray small" th:href="@{/admin__${prefix}__/employee/__${employee.id}__/edit}" th:text="#{edit}"> Edit</a>
+							<a class="button gray small" th:href="@{/admin/employee/__${employee.id}__/visits}" th:text="#{visits}"> Visits</a>
+						</td>
+					</tr>
+				</tbody>	
+			</table>
+			<div th:include="include/fragment :: pager(${#lists.size(allEmployees)})"></div>
+		</div>
+	</div>
+
+
+	<div th:fragment="logout">
+		<a id="logout" th:href="@{/j_spring_security_logout}" th:text="#{logout}">logout</a>
+	</div>
+	
+	<div th:fragment="employee_visits">
+		<div class="content_nav">
+			<a class="button orange small" th:href="@{/employee/visit/new}" th:text="#{new}">New</a>
+			<a class="button orange small" th:href="@{/employee/visit/upcoming}" th:text="#{upcoming}">Upcoming</a>
+			<a class="button orange small" th:href="@{/employee/visit/past}" th:text="#{past}">Past</a>
+		</div>
+	</div>
+
+	<div th:fragment="admin_employees">
+		<a th:href="@{/admin/employee/new}"><button type="button" th:text="#{new}">New</button></a>
+		<a th:href="@{/admin/employee/all}"><button type="button" th:text="#{all}">All</button></a>
+	</div>
+	
+	<div th:fragment="admin_places">
+		<a th:href="@{/admin/place/new}"><button type="button" th:text="#{new}">New</button></a>
+		<a th:href="@{/admin/place/all}"><button type="button" th:text="#{all}">All</button></a>
+	</div>
+	
+	<div th:fragment="client_visits" >
+	<div class="content_nav">
+		<a class="button orange small" th:href="@{/client/visit/new}" th:text="#{new}">New</a>
+		<a class="button orange small" th:href="@{/client/visit/upcoming}" th:text="#{upcoming}">Upcoming</a>
+		<a class="button orange small" th:href="@{/client/visit/past}" th:text="#{past}">Past</a>
+	</div>	
+<!-- 		<br /> -->
+<!-- 		<br /> -->
+	</div>
+
+	<div th:fragment="header">
+		<div id="header">
+		
+			<a th:href="@{/language/en_GB}" onclick="language(this,event);"><img alt="" src="" th:src="@{/css/uk.png}" /></a>
+			<a th:href="@{/language/pl_PL}" onclick="language(this,event);"><img alt="" src="" th:src="@{/css/pl.png}" /></a>
+			
+			<div sec:authorize="isAuthenticated()">
+			<ul id="list-nav" class="rounded white">
+				<li >
+					<a class="button blue" href="#" th:href="@{/}" th:text="#{home}">Home</a>
+				</li>
+				
+				<li sec:authorize="hasRole('ROLE_USER')" >
+					<a class="button blue" href="#" th:href="@{/client/profile}" th:text="#{my_profile}">My profile</a>
+				</li>
+				
+				<li sec:authorize="hasRole('ROLE_USER')" >
+					<a class="button blue" href="#" th:href="@{/client/visit/upcoming}" th:text="#{my_visits}">My visits</a>
+				</li>
+
+				<li sec:authorize="hasAnyRole('ROLE_EMPLOYEE', 'ROLE_ADMIN')">
+					<a class="button blue" href="#" th:href="@{/employee/profile}" th:text="#{my_profile}">My profile</a>
+				</li>
+				
+				<li sec:authorize="hasAnyRole('ROLE_EMPLOYEE', 'ROLE_ADMIN')">
+					<a class="button blue" href="#" th:href="@{/employee/visit/upcoming}" th:text="#{my_visits}">My visits</a>
+				</li>
+				
+				<li sec:authorize="hasRole('ROLE_ADMIN')">
+					<a class="button blue" href="#" th:href="@{/admin/employees}" th:text="#{employees}">Employees</a>
+				</li>
+				
+				<li sec:authorize="hasRole('ROLE_ADMIN')">
+					<a class="button blue" href="#" th:href="@{/admin/place/all}" th:text="#{places}">Places</a>
+				</li>
+				
+				<li >
+					<a class="button blue" href="#" th:href="@{/j_spring_security_logout}" th:text="#{log_out}">Log out</a>
+				</li>
+			</ul>
+			</div>
+			<div sec:authorize="isAnonymous()" id="login_form">
+				<form class="whiteText" th:action="@{/j_spring_security_check}" method="post">
+					<table>
+						<tr>
+							<td th:text="#{login}">Login</td>
+							<td th:text="#{password}">Password</td>
+						</tr>
+						<tr>
+							<td><input type="text" id="j_username" name="j_username" /></td>
+							<td><input type="password" id="j_password" name="j_password" /></td>
+						</tr>
+					</table>
+					<p th:if="${loginError}" class="error" th:text="#{wrong_login_pass}">Wrong login or password</p>
+					<p th:if="${loginExpired}" class="error" th:text="#{logged_out_by_another_user}"></p>
+					<label for="_spring_security_remember_me" th:text="#{keep_logged_in}">Keep me logged in</label>
+   					<input id="_spring_security_remember_me" name="_spring_security_remember_me" type="checkbox"/>
+					
+					<input class="button orange small" type="submit" value="Log in"  th:value="#{log_in}"/>
+				</form>
+				
+			</div>
+		</div>
+
+	</div>
+</body>
+</html>

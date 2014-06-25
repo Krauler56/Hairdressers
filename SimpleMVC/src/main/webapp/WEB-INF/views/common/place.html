@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+	<title>Home</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" media="all" href="../../css/moj.css" th:href="@{/css/moj.css}" />
+	<script type="text/javascript" th:src="@{/js/moj.js}"></script>
+</head>
+<body>
+	<div th:include="include/fragment :: header"></div>
+	<div id="content">
+	
+		<div class="content_nav">
+			<a class="button orange small" href="javascript:history.back()" th:text="#{back}">Back</a>
+		</div>	
+		
+		<h3 th:text="|${workPlace.name} #{details} |"></h3>
+		<table class="table_details" th:object="${workPlace}">
+			<tr>
+				<td th:text="#{avg_rate}">Avg rate</td>
+				
+				<td th:if="*{rate != 0.00}" th:text="|*{#numbers.formatDecimal(rate,1,2)} / 5.00|" ></td>
+				<td th:if="*{rate == 0.00}">- / 5.00</td>
+			</tr>
+
+			<tr>
+				<td th:text="#{open_hours}">Open hours</td>
+				<td>
+					<table>
+						<tr>
+							<td th:text="#{from}">From</td>
+							<td th:text="*{openFrom}"></td>
+						</tr>
+						<tr>
+							<td th:text="#{to}">To</td>
+							<td th:text="*{openTo}"></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+
+			<tr>
+				<td th:text="#{city}">City</td>
+				<td th:text="*{city}"></td>
+			</tr>
+
+			<tr>
+				<td th:text="#{post_code}">Post code</td>
+				<td th:text="*{postCode}"></td>
+			</tr>
+
+			<tr>
+				<td th:text="#{street}">Street</td>
+				<td th:text="*{street}"></td>
+			</tr>
+
+			<tr>
+				<td th:text="#{building_number}">Building number</td>
+				<td th:text="*{buildingNumber}"></td>
+			</tr>
+
+			<tr>
+				<td th:text="#{door_number}">Door number</td>
+				<td th:text="*{doorNumber}"></td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

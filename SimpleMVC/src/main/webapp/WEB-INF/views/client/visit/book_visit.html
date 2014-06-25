@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+	<title>Home</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" media="all" href="../../css/moj.css" th:href="@{/css/moj.css}" />
+	<script type="text/javascript" th:src="@{/js/moj.js}"></script>
+</head>
+<body>
+	<div th:include="include/fragment :: header"></div>
+	<div id="content">
+		<div th:include="include/fragment :: client_visits"></div>
+
+		<div>
+			
+			<h2 th:text="#{book_visit}">book_visit</h2>
+			
+			<p th:if="${hasVisitsClient == true}" th:text="#{hasVisitsClientException}" class="error"></p>
+			<p th:if="${noEmployeeAtWorkPlace == true}" th:text="#{noEmployeeAtWorkPlaceException}" class="error"></p>
+			
+			<form action="#" th:action="@{/checkForVisit}" th:object="${newVisit}" method="post">
+				<div th:include="include/fragment :: order_visit"></div>
+			</form>
+			
+		</div>
+
+	</div>
+</body>
+</html>

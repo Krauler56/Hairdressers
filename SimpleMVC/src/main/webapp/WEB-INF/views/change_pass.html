@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+	<title>Home</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" media="all" href="../../css/moj.css" th:href="@{/css/moj.css}" />
+	<script type="text/javascript" th:src="@{/js/moj.js}"></script>
+</head>
+<body>
+	<div th:include="include/fragment :: header"></div>
+	<div id="content">
+		<h3 th:text="#{change_pass}">Change password</h3>
+		<form action="#" th:action="@{/password}" th:object="${changePassword}" method="post">
+			<table>
+				<tr>
+					<td th:text="#{old_pass}">Old password</td>
+					<td><input type="password" th:field="*{oldPass}" /></td>
+					<td th:if="${#fields.hasErrors('oldPass')}" th:errors="*{oldPass}" class="error"></td>
+				</tr>
+				<tr>
+					<td th:text="#{new_pass}">New password</td>
+					<td><input type="password" th:field="*{newPass}" /></td>
+					<td th:if="${#fields.hasErrors('newPass')}" th:errors="*{newPass}" class="error"></td>
+				</tr>
+				<tr>
+					<td th:text="#{repeat_pass}">Repeat new password</td>
+					<td><input type="password" th:field="*{newPassRepeat}" /></td>
+					<td th:if="${#fields.hasErrors('newPassRepeat')}" th:errors="*{newPassRepeat}" class="error"></td>
+				</tr>
+			</table>
+			
+			<div th:if="${succes == true}" class="greenText" th:text="#{pass_changed}">Password changed</div>
+			<div th:if="${succes == false}" class="error" th:text="#{pass_changing_failed}">Changing password failed</div>
+			
+			<a sec:authorize="hasRole('ROLE_USER')" class="button orange small" href="#" th:href="@{/client/profile}"  th:text="#{back}">Back</a>
+			<a sec:authorize="hasAnyRole('ROLE_EMPLOYEE', 'ROLE_ADMIN')" class="button orange small" href="#" th:href="@{/employee/profile}" th:text="#{back}">Back</a>
+			<input class="button small orange" type="submit" value="Save" th:value="#{save}" />
+		</form>
+	</div>
+	
+</body>
+</html>

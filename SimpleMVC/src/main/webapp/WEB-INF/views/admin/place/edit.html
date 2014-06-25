@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+	<title>Home</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" media="all" href="../../css/moj.css" th:href="@{/css/moj.css}" />
+	<script type="text/javascript" th:src="@{/js/moj.js}"></script>
+</head>
+<body>
+	<div th:include="include/fragment :: header"></div>
+	<div id="content">
+		<h3 th:text="#{edit_place}">Edit place </h3>
+		<form action="#" th:action="@{/admin/place/edit}" th:object="${workPlace}" method="post">
+			<table>
+					<tr>
+						<td th:text="#{name}">Name</td>
+						<td><input type="text" th:field="*{name}" /></td>
+						<td th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error"></td>
+					</tr>
+
+					<tr>
+						<td th:utext="#{number_employees}">Number of employees</td>
+						<td><input type="number" th:field="*{maxEmployees}" min="1"/></td>
+						<td th:if="${exceededMaxEmployees == true}" th:text="#{exceededMaxEmployees}" class="error"></td>
+					</tr>
+
+					<tr>
+						<td th:text="#{open_hours}">Open hours</td>
+						<td>
+							<table>
+								<tr>
+									<td th:text="#{from}">From</td>
+									<td><input type="time" step="1800" required="required" th:field="*{openFrom}" /></td>
+								</tr>
+								<tr>
+									<td th:text="#{to}">To</td>
+									<td><input type="time" step="1800" required="required" th:field="*{openTo}" /></td>
+								</tr>
+							</table>
+						</td>
+						<td th:if="${closeBeforeOpen == true}" th:text="#{closeBeforeOpen}" class="error"> </td>
+					</tr>
+
+					<tr>
+						<td th:text="#{city}">City</td>
+						<td><input type="text" th:field="*{city}" /></td>
+						<td th:if="${#fields.hasErrors('city')}" th:errors="*{city}" class="error"></td>
+					</tr>
+
+					<tr>
+						<td th:text="#{post_code}">Post code</td>
+						<td><input type="text" th:field="*{postCode}" /></td>
+						<td th:if="${#fields.hasErrors('postCode')}" th:errors="*{postCode}" class="error"></td>
+					</tr>
+
+					<tr>
+						<td th:text="#{street}">Street</td>
+						<td><input type="text" th:field="*{street}" /></td>
+						<td th:if="${#fields.hasErrors('street')}" th:errors="*{street}" class="error"></td>
+					</tr>
+
+					<tr>
+						<td th:text="#{building_number}">Building number</td>
+						<td><input type="number" th:field="*{buildingNumber}" min="1"/></td>
+						<td th:if="${#fields.hasErrors('buildingNumber')}" th:errors="*{buildingNumber}" class="error"></td>
+					</tr>
+
+					<tr>
+						<td th:text="#{door_number}">Door number</td>
+						<td><input type="number" th:field="*{doorNumber}" min="1"/></td>
+						<td th:if="${#fields.hasErrors('doorNumber')}" th:errors="*{doorNumber}" class="error"></td>
+					</tr>
+				</table>
+				
+				<a class="button orange small" th:href="@{/admin/place/all}" th:text="#{cancel}">Cancel</a>
+				<input class="button orange small" type="submit" value="Save" th:value="#{save}" />
+		</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+	<title>Home</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" media="all" href="../../css/moj.css" th:href="@{/css/moj.css}" />
+	<script type="text/javascript" th:src="@{/js/moj.js}"></script>
+</head>
+<body>
+	<div th:include="include/fragment :: header"></div>
+	<div id="content">
+		<h3 th:text="#{edit_profile}">Edit profile</h3>
+		<form action="#" th:action="@{/editProfileClient}" th:object="${client}" method="post">
+			<table>
+				<tr>
+					<td th:text="#{first_name}">First name</td>
+					<td> <input type="text" th:field="*{firstName}" /> </td>
+					<td th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="error"></td>
+				</tr>
+				<tr>
+					<td th:text="#{last_name}">Last name </td>
+					<td> <input type="text" th:field="*{lastName}" /> </td>
+					<td th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="error"></td>
+				</tr>
+				<tr>
+					<td th:text="#{password}">Password</td>
+					<td> <a href="#" th:href="@{/password}" class="button small gray" th:text="#{change_pass}">Change password</a></td>
+				</tr>
+				<tr>
+					<td th:text="#{email}">E-mail</td>
+					<td> <input type="text" th:field="*{email}" /></td>
+					<td th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"></td>
+				</tr>
+			</table>
+			<input class="button orange small" type="submit" value="Save"  th:value="#{save}"/>
+		</form>
+		<div th:if="${succes == true}" class="greenText"  th:text="#{saved_ok}">Saved successfully</div>
+	</div>
+</body>
+</html>

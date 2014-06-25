@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+	<title>Home</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" media="all" href="../../css/moj.css" th:href="@{/css/moj.css}" />
+	<script type="text/javascript" th:src="@{/js/moj.js}"></script>
+</head>
+<body>
+	<div th:include="include/fragment :: header"></div>
+	<div id="content">
+		<h2 th:text="#{edit_employee}">Edit employee</h2>
+		<form action="#" th:action="@{/__${action}__}" th:object="${employee}" method="post">
+			<table>
+				<tr>
+					<td th:text="#{first_name}">First name</td>
+					<td><input type="text" th:field="*{firstName}" /></td>
+					<td th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="error"></td>
+				</tr>
+
+				<tr>
+					<td th:text="#{last_name}">Last name</td>
+					<td><input type="text" th:field="*{lastName}" /></td>
+					<td th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="error"></td>
+				</tr>
+				
+				<tr>
+					<td th:text="#{work_place}">Place of work</td>
+					<td>
+						<select th:field="*{placeID}">
+							<option value="0" th:selected="${employee.placeID == 0}" th:text="#{none}">None</option>
+							<option th:each="place : ${allPlacesWithVacancy}" 
+									th:value="${place.id}" 
+									th:text="${place.name}"
+									th:selected="${employee.placeID == place.id}"></option>
+						</select>
+					</td>
+				</tr>
+			</table>
+			<p th:if="${hasUpcomingVisits == true}" th:text="#{hasUpcomingVisits}" class="error"></p>
+			<p th:if="${noVacancy == true}" th:text="#{noVacancy}" class="error"></p>
+			<p th:if="${changed == true}" th:text="#{saved_ok}" class="greenText"></p>
+			
+			<a class="button orange small" th:href="@{/__${prevPage}__}" th:text="#{back}">Back</a>
+			<input class="button orange small" type="submit" th:value="#{save}"/>	
+		</form>
+
+	</div>
+</body>
+</html>
