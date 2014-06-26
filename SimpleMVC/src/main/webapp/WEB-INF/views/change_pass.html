@@ -30,6 +30,8 @@
 			</table>
 			
 			<div th:if="${succes == true}" class="greenText" th:text="#{pass_changed}">Password changed</div>
+			<div th:if="${succes == true}" class="error" th:utext="#{changing_pass_disabled}">Password changed</div>
+
 			<div th:if="${succes == false}" class="error" th:text="#{pass_changing_failed}">Changing password failed</div>
 			
 			<a sec:authorize="hasRole('ROLE_USER')" class="button orange small" href="#" th:href="@{/client/profile}"  th:text="#{back}">Back</a>

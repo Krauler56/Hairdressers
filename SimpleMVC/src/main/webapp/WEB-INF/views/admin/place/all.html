@@ -41,7 +41,7 @@
 					<tr th:each="place : ${allPlaces}">
 						<td th:text="${place.name}"></td>
 						<td th:text="|${place.buildingNumber}/${place.doorNumber}  ${place.street}|"></td>
-						<td th:text="|${place.city}  ${place.postCode}|" ></td>
+						<td th:text="${place.city}" ></td>
 						<td th:text="|${place.openFrom} - ${place.openTo}|"></td>
 						<td>
 							<a class="button gray small" th:href="@{/admin/place/__${place.id}__/edit}" th:text="#{edit}">Edit</a>

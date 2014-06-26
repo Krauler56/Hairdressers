@@ -11,12 +11,10 @@
 
 	<div id="content">
 
-		<h3>Logged user's login: <span sec:authentication="name" class="greenText">Bob</span> </h3>
-		<br/>
-		
-		<h3 class="error">Home page in progress...</h3>
+		<h3 th:utext="#{home_page_msg}"></h3><br/>
 
+		<h4><span th:text="#{logged_user_login}"></span><span sec:authentication="name" class="greenText">Bob</span></h4><br/>
 	</div>
-
+	
 </body>
 </html>

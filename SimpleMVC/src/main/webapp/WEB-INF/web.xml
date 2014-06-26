@@ -64,5 +64,10 @@
    <listener>
      <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
    </listener>
+   
+	<!-- Time zone -->
+   <listener>
+		<listener-class>org.korek.spring.web.config.DefaultTimeZone</listener-class>
+	</listener>
  
 </web-app>

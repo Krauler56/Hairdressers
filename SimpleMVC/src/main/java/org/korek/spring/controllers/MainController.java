@@ -1,5 +1,6 @@
 package org.korek.spring.controllers;
 
+import java.util.Date;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +13,6 @@ import org.korek.spring.controllers.helpers.Views;
 import org.korek.spring.controllers.models.ChangePassword;
 import org.korek.spring.controllers.models.ClientTO;
 import org.korek.spring.controllers.models.EmployeeTO;
-import org.korek.spring.controllers.models.NewEmployee;
 import org.korek.spring.controllers.models.WorkPlace;
 import org.korek.spring.services.client.interfaces.IClientManager;
 import org.korek.spring.services.common.interfaces.IAuthManager;
@@ -56,8 +56,10 @@ public class MainController
 	IEmployeeManager employeeManager;
 
 	@RequestMapping(value = RequestMap.HOME, method = RequestMethod.GET)
-	public String home(Locale locale, Model model)
+	public String home(Model model)
 	{
+		model.addAttribute("date", new Date());
+		
 		return Views.HOME;
 	}
 
@@ -72,7 +74,8 @@ public class MainController
 
 		return Views.CHANGE_PASS;
 	}
-
+	
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = RequestMap.PASSWORD, method = RequestMethod.POST)
 	public String changePassForm(@Valid @ModelAttribute(value = ModelAttr.CHANGE_PASSWORD) ChangePassword changePassword, BindingResult bindingResult, Model model, Authentication authentication, RedirectAttributes attr)
 	{

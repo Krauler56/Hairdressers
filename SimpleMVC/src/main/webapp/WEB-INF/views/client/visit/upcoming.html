@@ -45,7 +45,7 @@
 							<td th:text="${#calendars.format(visit.startDate, 'dd-MM-yyyy')}"></td>
 							<td th:text="${#calendars.format(visit.startDate, 'HH:mm')}"></td>
 							<td class="link"><a href="#" th:href="@{/place/__${visit.placeID}__}" th:text="${visit.placeName}" ></a></td>
-							<td class="link"><a href="#" th:href="@{/employee/__${visit.employeeID}__}" th:text="${visit.employeeName}" ></a></td>
+							<td class="link"><a href="#" th:href="@{/employee/__${visit.employeeID}__}" th:text="|${visit.employeeFirstName} ${visit.employeeName}|" ></a></td>
 							<td> 
 								<form th:onsubmit="#{js.confirm}" action="#" th:action="@{/client/visit/__${visit.id}__/cancel}" method="post">
 									<input class="button gray small" type="submit" th:value="#{cancel_visit}"/>

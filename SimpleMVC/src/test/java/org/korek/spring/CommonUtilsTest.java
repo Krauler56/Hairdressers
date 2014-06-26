@@ -9,7 +9,6 @@ import org.junit.Test;
 import org.korek.spring.repositories.entities.Hairdressers;
 import org.korek.spring.services.common.helpers.OpenTime;
 import org.korek.spring.utils.CommonUtils;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
 public class CommonUtilsTest
@@ -35,7 +34,7 @@ public class CommonUtilsTest
 	}
 	
 	@Test
-	public void test()
+	public void diffInDateTest()
 	{
 		Calendar c1 = new GregorianCalendar(1500, 2, 3, 9, 40, 0);
 		Calendar c2 = new GregorianCalendar(1500, 2, 3, 9, 20, 0);
@@ -46,7 +45,7 @@ public class CommonUtilsTest
 	}
 	
 	@Test
-	public void test2()
+	public void openTimeTest()
 	{
 		Hairdressers hairdressers = new Hairdressers();
 		hairdressers.setOpenFrom("07:00");
@@ -54,26 +53,10 @@ public class CommonUtilsTest
 		
 		OpenTime openTime = new OpenTime(hairdressers );
 		
-		System.out.println(openTime);
-	}
-	
-	@Test
-	public void xxx()
-	{
-		BCryptPasswordEncoder x = new BCryptPasswordEncoder(13);
+		Assert.assertEquals(7, openTime.getHourFrom());
+		Assert.assertEquals(0, openTime.getMinFrom());
 		
-		BCryptPasswordEncoder x1= new BCryptPasswordEncoder(11);
-		
-		BCryptPasswordEncoder x2= new BCryptPasswordEncoder();
-		
-		String encode = x.encode("a");
-		
-		String encode1 = x1.encode("a");
-		
-		String encode2 = x2.encode("a");
-		
-		System.out.println(encode.length());
-		System.out.println(encode1.length());
-		System.out.println(encode2.length());
+		Assert.assertEquals(15, openTime.getHourTo());
+		Assert.assertEquals(30, openTime.getMinTo());
 	}
 }

@@ -103,14 +103,13 @@ public class AuthManager implements IAuthManager
 				String oldPasswordDB = authDetails.getPassword();
 				String oldPassword = changePassword.getOldPass();
 				
-				if(/*oldPasswordDB.equals(oldPassword)*/ passEncoder.maches(oldPassword, oldPasswordDB))
+				if(passEncoder.maches(oldPassword, oldPasswordDB))
 				{
-					authDetails.setPassword(passEncoder.encode(changePassword.getNewPass()));
+					//changing pass disabled
+					//authDetails.setPassword(passEncoder.encode(changePassword.getNewPass()));
 					changed = true;
 				}
-				
 			}
-
 		}
 
 		return changed;

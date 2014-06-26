@@ -11,6 +11,7 @@ public class ClientVisit
 	private String placeName;
 	private long placeID;
 
+	private String employeeFirstName;
 	private String employeeName;
 	private long employeeID;
 
@@ -26,6 +27,7 @@ public class ClientVisit
 		this.id = visit.getId();
 		this.placeName = visit.getHairdressers().getName();
 		this.placeID = visit.getHairdressers().getId();
+		this.employeeFirstName = visit.getEmployee().getFirstName();
 		this.employeeName = visit.getEmployee().getLastName();
 		this.employeeID = visit.getEmployee().getId();
 		this.startDate = visit.getStartDate().getTime();
@@ -113,8 +115,13 @@ public class ClientVisit
 		this.confirmed = confirmed;
 	}
 
-	
-	
-	
+	public String getEmployeeFirstName()
+	{
+		return employeeFirstName;
+	}
 
+	public void setEmployeeFirstName(String employeeFirstName)
+	{
+		this.employeeFirstName = employeeFirstName;
+	}
 }

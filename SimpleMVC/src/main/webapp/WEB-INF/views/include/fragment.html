@@ -75,8 +75,9 @@
 				<td th:text="#{select_hair}" class="bold">Select type of hair:</td>
 				<td>
 					<div class="alginLeft">
-						<input type="radio" value="SHORT" name="hairType" th:field="*{hairType}" required="required" /> <label th:text="#{short}"> short</label> <br /> <input type="radio" value="MEDIUM" name="hairType" th:field="*{hairType}" required="required" /> <label
-							th:text="#{medium}"> medium</label> <br /> <input type="radio" value="LONG" name="hairType" th:field="*{hairType}" required="required" /> <label th:text="#{long}"> long</label>
+						<input type="radio" value="SHORT" name="hairType" th:field="*{hairType}" required="required" /> <label th:text="#{short}"> short</label> <br /> 
+						<input type="radio" value="MEDIUM" name="hairType" th:field="*{hairType}" required="required" /> <label th:text="#{medium}"> medium</label> <br /> 
+						<input type="radio" value="LONG" name="hairType" th:field="*{hairType}" required="required" /> <label th:text="#{long}"> long</label>
 					</div>
 				</td>
 			</tr>
@@ -160,10 +161,10 @@
 						
 						<td class="link"><a href="#" th:href="@{/place/__${visit.placeID}__}" th:text="${visit.placeName}"></a></td>
 						
-						<td class="link"><a href="#" th:href="@{/employee/__${visit.employeeID}__}" th:text="${visit.employeeFirstName}"></a></td>
+						<td class="link"><a href="#" th:href="@{/employee/__${visit.employeeID}__}" th:text="|${visit.employeeFirstName} ${visit.employeeLastName}|"></a></td>
 						
 						<td class="link">
-							<a th:if="${visit.clientID != 0}" href="#" th:href="@{/client/__${visit.clientID}__}" th:text="${visit.clientFirstName}"></a>
+							<a th:if="${visit.clientID != 0}" href="#" th:href="@{/client/__${visit.clientID}__}" th:text="|${visit.clientFirstName} ${visit.clientLastName}|"></a>
 							<span th:if="${visit.clientID == 0}">-</span>
 						</td>
 						
