@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-	<title>Home</title>
+	<title>Employees</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<script type="text/javascript" th:src="@{/js/jquery-2.1.1.min.js}"></script> 
 	<script type="text/javascript" th:src="@{/js/jquery.tablesorter.min.js}"></script> 
@@ -20,7 +20,7 @@
 		
 		<p th:if="${success == true}" th:text="#{add_employee_success}" class="greenText"></p>
 	
-		<h2 th:text="#{all_employees}">All employees</h2>
+		<h3 th:text="#{all_employees}">All employees</h3>
 		<div th:include="include/fragment :: employees_table"></div>
 	
 	</div>

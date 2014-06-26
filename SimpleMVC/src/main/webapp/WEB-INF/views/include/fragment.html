@@ -174,9 +174,6 @@
 						</td>
 						
 						<td th:if="${pastVisits == true}" >
-	<!-- 						<form th:if="${visit.confirmed == false}" th:action="@{/employee/visit/__${visit.visitID}__/confirm}" method="post"> -->
-	<!-- 							<input class="button small gray" type="submit" th:value="#{confirm}" /> -->
-	<!-- 						</form> -->
 							<div th:if="${visit.confirmed == false}">
 								<form sec:authorize="hasRole('ROLE_EMPLOYEE')" th:action="@{/employee/visit/__${visit.visitID}__/confirm}" method="post">
 									<input class="button small gray" type="submit" th:value="#{confirm}" />
@@ -265,13 +262,11 @@
 	</div>
 	
 	<div th:fragment="client_visits" >
-	<div class="content_nav">
-		<a class="button orange small" th:href="@{/client/visit/new}" th:text="#{new}">New</a>
-		<a class="button orange small" th:href="@{/client/visit/upcoming}" th:text="#{upcoming}">Upcoming</a>
-		<a class="button orange small" th:href="@{/client/visit/past}" th:text="#{past}">Past</a>
-	</div>	
-<!-- 		<br /> -->
-<!-- 		<br /> -->
+		<div class="content_nav">
+			<a class="button orange small" th:href="@{/client/visit/new}" th:text="#{new}">New</a>
+			<a class="button orange small" th:href="@{/client/visit/upcoming}" th:text="#{upcoming}">Upcoming</a>
+			<a class="button orange small" th:href="@{/client/visit/past}" th:text="#{past}">Past</a>
+		</div>	
 	</div>
 
 	<div th:fragment="header">
@@ -283,7 +278,7 @@
 			<div sec:authorize="isAuthenticated()">
 			<ul id="list-nav" class="rounded white">
 				<li >
-					<a class="button blue" href="#" th:href="@{/}" th:text="#{home}">Home</a>
+					<a class="button blue" href="#" th:href="@{/home}" th:text="#{home}">Home</a>
 				</li>
 				
 				<li sec:authorize="hasRole('ROLE_USER')" >

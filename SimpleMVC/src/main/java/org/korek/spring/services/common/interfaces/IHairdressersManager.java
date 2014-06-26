@@ -10,22 +10,22 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface IHairdressersManager
 {
-	@Transactional
+	@Transactional(readOnly = true)
 	List<WorkPlace> getAllWorkPlaceWithAvailableVacancy();
 	
-	@Transactional
+	@Transactional(readOnly = true)
 	List<WorkPlace> getAllWorkPlaceWithAtLeastOneEmployee();
 	
-	@Transactional
+	@Transactional(readOnly = true)
 	List<WorkPlace> getAllWorkPlace();
 	
-	@Transactional
+	@Transactional(readOnly = true)
 	List<EmployeeTO> getAllEmployees(long placeID); 
 	
-	@Transactional
+	@Transactional(readOnly = true)
 	WorkPlace getWorkPlace(long id);
 	
-	@Transactional
+	@Transactional(readOnly = true)
 	WorkPlace getWorkPlaceDetails(long id);
 	
 	@Transactional

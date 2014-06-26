@@ -25,4 +25,13 @@ public class HairdressersDAO extends BaseDAO<Hairdressers> implements IHairdress
 		return list;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Hairdressers> getAllWithAvailableVacancy()
+	{
+		List<Hairdressers> list = getCurrentSession().getNamedQuery(Hairdressers.ALL_WITH_AVAILABLE_VACANCY).list();
+		
+		return list;
+	}
+
 }

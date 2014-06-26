@@ -120,4 +120,31 @@ public class RequestMap
 
 	public static final String REGISTER = "register";
 
+	public static final String HOME = "home";
+
+	public static String adminPlaceEdit(long placeID)
+	{
+		return "admin/place/" + placeID + "/edit";
+	}
+
+	public static String adminPlaceNewVisit(long placeID)
+	{
+		return "admin/place/" + placeID + "/visit/new";
+	}
+
+	public static String adminPlaceVisits(long placeID)
+	{
+		return "admin/place/" + placeID + "/visits";
+	}
+
+	public static String adminEmployeeEdit(long emmployeeID)
+	{
+		return  "admin/employee/" + emmployeeID + "/edit";
+	}
+
+	public static String adminPlaceEmployeeEdit(long placeID, long employeeID)
+	{
+		return "admin/place/" + placeID + "/employee/" + employeeID + "/edit";
+	}
+
 }

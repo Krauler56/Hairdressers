@@ -59,7 +59,7 @@ public class AdminController
 	IEmployeeManager employeeManager;
 
 	@RequestMapping(value = RequestMap.ADMIN_PLACE_ALL, method = RequestMethod.GET)
-	public String adminShowWorkPlaces(Model model)
+	public String workPlaces(Model model)
 	{
 		List<WorkPlace> allPlaces = hairdressersManager.getAllWorkPlace();
 		model.addAttribute(ModelAttr.ALL_PLACES, allPlaces);
@@ -82,7 +82,7 @@ public class AdminController
 	}
 
 	@RequestMapping(value = RequestMap.ADMIN_ADD_EMPLOYEE, method = RequestMethod.POST)
-	public String addNewEmployee(@Valid @ModelAttribute(value = ModelAttr.NEW_EMPLOYEE) NewEmployee newEmployee, BindingResult bindingResult, RedirectAttributes attr)
+	public String newEmployeePost(@Valid @ModelAttribute(value = ModelAttr.NEW_EMPLOYEE) NewEmployee newEmployee, BindingResult bindingResult, RedirectAttributes attr)
 	{
 
 		boolean added = false;
@@ -129,7 +129,7 @@ public class AdminController
 	}
 
 	@RequestMapping(value = RequestMap.ADMIN_ADD_PLACE, method = RequestMethod.POST)
-	public String addNewPlace(@Valid @ModelAttribute(value = ModelAttr.NEW_PLACE) NewPlace newPlace, BindingResult bindingResult, RedirectAttributes attr)
+	public String newPlacePost(@Valid @ModelAttribute(value = ModelAttr.NEW_PLACE) NewPlace newPlace, BindingResult bindingResult, RedirectAttributes attr)
 	{
 
 		if (bindingResult.hasErrors())
@@ -171,15 +171,15 @@ public class AdminController
 	}
 
 	@RequestMapping(value = RequestMap.ADMIN_PLACE_EDIT_POST, method = RequestMethod.POST)
-	public String editPlace(Model model, @Valid @ModelAttribute(value = ModelAttr.WORK_PLACE) WorkPlace workPlace, BindingResult bindingResult, HttpSession session, RedirectAttributes attr)
+	public String editPlacePost(Model model, @Valid @ModelAttribute(value = ModelAttr.WORK_PLACE) WorkPlace workPlace, BindingResult bindingResult, HttpSession session, RedirectAttributes attr)
 	{
 		WorkPlace workPlaceOld = (WorkPlace) session.getAttribute(SessionAttr.WORK_PLACE);
-
+		long placeID = workPlaceOld.getId();
 		if (bindingResult.hasErrors())
 		{
 			CommonUtils.handleBindingErrors(ModelAttr.WORK_PLACE, bindingResult, attr, workPlace);
 
-			return "redirect:/" + "admin/place/" + workPlaceOld.getId() + "/edit";
+			return "redirect:/" + RequestMap.adminPlaceEdit(placeID);
 		}
 
 		try
@@ -188,11 +188,10 @@ public class AdminController
 		}
 		catch (PlaceException e)
 		{
-			System.out.println(e.getDataToModel());
 			attr.addFlashAttribute(e.getDataToModel(), true);
 			attr.addFlashAttribute(ModelAttr.WORK_PLACE, workPlace);
 			
-			return "redirect:/" + "admin/place/" + workPlaceOld.getId() + "/edit";
+			return "redirect:/" + RequestMap.adminPlaceEdit(placeID);
 		}
 
 		return "redirect:/" + Views.ADMIN_PLACE_ALL;
@@ -262,7 +261,7 @@ public class AdminController
 		{
 			attr.addFlashAttribute(e.getDataToModel(), true);
 
-			return "redirect:/" + "admin/place/" + placeID + "/visit/new";
+			return "redirect:/" + RequestMap.adminPlaceNewVisit(placeID); 
 		}
 		CheckForVisitHelper.handleCheckForVisit(searchingForVisitResult, newVisit, session, attr);
 
@@ -270,19 +269,19 @@ public class AdminController
 	}
 
 	@RequestMapping(value = RequestMap.ADMIN_CONFIRM_PLACE_VISIT, method = RequestMethod.GET)
-	public String yyyy(Model model, @PathVariable("id") long placeID)
+	public String confirmVisit(Model model, @PathVariable("id") long placeID)
 	{
 
 		if (!model.containsAttribute(ModelAttr.DATE_AVAIABLE))
 		{
-			return "redirect:/" + "admin/place/" + placeID + "/visit/new";
+			return "redirect:/" + RequestMap.adminPlaceNewVisit(placeID);
 		}
 
 		return Views.ADMIN_PLACE_CONFIRM_NEW_VISIT; 
 	}
 
 	@RequestMapping(value = RequestMap.ADMIN_CONFIRM_VISIT, method = RequestMethod.POST)
-	public String confirmVisit(HttpSession session, RedirectAttributes attr, @RequestParam(value = "suggestedDateID", required = false) Long suggestedDateID)
+	public String confirmVisitPost(HttpSession session, RedirectAttributes attr, @RequestParam(value = "suggestedDateID", required = false) Long suggestedDateID)
 	{
 		NewVisit newVisit = (NewVisit) session.getAttribute(SessionAttr.VISIT);
 		long placeID = newVisit.getWorkPlaceID();
@@ -291,12 +290,12 @@ public class AdminController
 		if (bookVisit == true)
 		{
 			attr.addFlashAttribute(ModelAttr.NEW_VISIT_ADDED, true);
-			return "redirect:/" + "admin/place/" + placeID + "/visits";
+			return "redirect:/" + RequestMap.adminPlaceVisits(placeID);
 		}
 		else
 		{
 			attr.addFlashAttribute(ModelAttr.NEW_VISIT_FAILED, true);
-			return "redirect:/" + "admin/place/" + placeID + "/visit/new";
+			return "redirect:/" + RequestMap.adminPlaceNewVisit(placeID);
 		}
 	}
 
@@ -326,12 +325,13 @@ public class AdminController
 	{
 
 		EmployeeTO employeeOld = (EmployeeTO) session.getAttribute(SessionAttr.EMPLOYEE);
-		String returnLink = "admin/employee/" + employeeOld.getId() + "/edit";
+		long emmployeeID = employeeOld.getId();
+
 		if (bindingResult.hasErrors())
 		{
 			CommonUtils.handleBindingErrors(ModelAttr.EMPLOYEE, bindingResult, attr, employee);
 
-			return "redirect:/" + returnLink;
+			return "redirect:/" +  RequestMap.adminEmployeeEdit(emmployeeID);
 		}
 
 		boolean changed = false;
@@ -346,7 +346,7 @@ public class AdminController
 
 		attr.addFlashAttribute(ModelAttr.CHANGED, changed);
 
-		return "redirect:/" + returnLink;
+		return "redirect:/" + RequestMap.adminEmployeeEdit(emmployeeID);
 
 	}
 
@@ -361,7 +361,7 @@ public class AdminController
 	}
 
 	@RequestMapping(value = RequestMap.ADMIN_PLACE_EMPLOYEE_EDIT, method = RequestMethod.GET)
-	public String editEmployeeY(Model model, @PathVariable("id") long employeeID, @PathVariable("placeID") long placeID, HttpSession session)
+	public String editPlaceEmployee(Model model, @PathVariable("id") long employeeID, @PathVariable("placeID") long placeID, HttpSession session)
 	{
 		editEmployee(model, session, employeeID);
 
@@ -372,18 +372,17 @@ public class AdminController
 	}
 	
 	@RequestMapping(value = RequestMap.ADMIN_PLACE_EMPLOYEE_EDIT_POST, method = RequestMethod.POST)
-	public String editEmployeePostY(@PathVariable("id") long placeID, @Valid @ModelAttribute(value = ModelAttr.EMPLOYEE) EmployeeTO employee, BindingResult bindingResult, HttpSession session, RedirectAttributes attr)
+	public String editPlaceEmployeePost(@PathVariable("id") long placeID, @Valid @ModelAttribute(value = ModelAttr.EMPLOYEE) EmployeeTO employee, BindingResult bindingResult, HttpSession session, RedirectAttributes attr)
 	{
 
 		EmployeeTO employeeOld = (EmployeeTO) session.getAttribute(SessionAttr.EMPLOYEE);
-
-		String returnLink = "admin/place/" + placeID + "/employee/" + employeeOld.getId() + "/edit";
+		long employeeID = employeeOld.getId();
 		
 		if (bindingResult.hasErrors())
 		{
 			CommonUtils.handleBindingErrors(ModelAttr.EMPLOYEE, bindingResult, attr, employee);
 
-			return "redirect:/" + returnLink;
+			return "redirect:/" + RequestMap.adminPlaceEmployeeEdit(placeID, employeeID);
 		}
 
 		boolean changed = false;
@@ -398,7 +397,7 @@ public class AdminController
 
 		attr.addFlashAttribute(ModelAttr.CHANGED, changed);
 
-		return "redirect:/" + returnLink;
+		return "redirect:/" + RequestMap.adminPlaceEmployeeEdit(placeID, employeeID);
 
 	}
 	

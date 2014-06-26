@@ -51,7 +51,7 @@ public class EmployeeController
 	IHairdressersManager hairdressersManager;
 	
 	@RequestMapping(value = RequestMap.EMPLOYEE_PROFILE, method = RequestMethod.GET)
-	public String employeeEditProfile(Model model, Principal principal, HttpSession session)
+	public String editProfile(Model model, Principal principal, HttpSession session)
 	{
 		if (!model.containsAttribute(ModelAttr.EMPLOYEE))
 		{
@@ -65,7 +65,7 @@ public class EmployeeController
 	}
 	
 	@RequestMapping(value = RequestMap.EMPLOYEE_EDIT_PROFILE, method = RequestMethod.POST)
-	public String editProfile(@Valid @ModelAttribute(value = ModelAttr.EMPLOYEE) EmployeeTO employee, BindingResult bindingResult, HttpSession session, Model model, Principal principal, RedirectAttributes attr)
+	public String editProfilePost(@Valid @ModelAttribute(value = ModelAttr.EMPLOYEE) EmployeeTO employee, BindingResult bindingResult, HttpSession session, Model model, Principal principal, RedirectAttributes attr)
 	{
 		
 		if(bindingResult.hasErrors())
@@ -127,7 +127,7 @@ public class EmployeeController
 	}
 	
 	@RequestMapping(value = RequestMap.EMPLOYEE_CHECK_VISIT_POST, method = RequestMethod.POST)
-	public String checkForVisit(@ModelAttribute(value = "newVisit") NewVisit newVisit, HttpSession session,Principal principal, RedirectAttributes attr)
+	public String checkForVisitPost(@ModelAttribute(value = "newVisit") NewVisit newVisit, HttpSession session,Principal principal, RedirectAttributes attr)
 	{
 		
 		long placeID = (long) session.getAttribute(SessionAttr.NEW_VISIT_PLACE_ID);
@@ -151,7 +151,7 @@ public class EmployeeController
 	}
 	
 	@RequestMapping(value = RequestMap.EMPLOYEE_CONFIRM_VISIT, method = RequestMethod.GET)
-	public String yyyy(Model model)
+	public String checkForVisit(Model model)
 	{
 
 		if (!model.containsAttribute(ModelAttr.DATE_AVAIABLE))
@@ -163,7 +163,7 @@ public class EmployeeController
 	}
 	
 	@RequestMapping(value = RequestMap.EMPLOYEE_CONFIRM_VISIT_POST, method = RequestMethod.POST)
-	public String confirmVisit(HttpSession session, Model model, Principal principal, RedirectAttributes attr,  @RequestParam(value= "suggestedDateID", required=false) Long suggestedDateID)
+	public String confirmNewVisit(HttpSession session, Model model, Principal principal, RedirectAttributes attr,  @RequestParam(value= "suggestedDateID", required=false) Long suggestedDateID)
 	{
 
 		NewVisit newVisit = (NewVisit) session.getAttribute(SessionAttr.VISIT);
@@ -183,7 +183,7 @@ public class EmployeeController
 	}
 	
 	@RequestMapping(value = RequestMap.EMPLOYEE_VISIT_PAST, method = RequestMethod.GET)
-	public String pastVisit(Model model, Principal principal)
+	public String pastVisits(Model model, Principal principal)
 	{
 		List<EmployeeVisit> pastEmployeeVisits = employeeManager.getPastEmployeeVisits(CommonUtils.getLoggedUserId(principal));
 		model.addAttribute(ModelAttr.VISITS, pastEmployeeVisits);
@@ -193,7 +193,7 @@ public class EmployeeController
 	}
 	
 	@RequestMapping(value = RequestMap.EMPLOYEE_VISIT_UPCOMING, method = RequestMethod.GET)
-	public String upcomingVisit(Model model, Principal principal)
+	public String upcomingVisits(Model model, Principal principal)
 	{
 		List<EmployeeVisit> upcomingEmployeeVisits = employeeManager.getUpcomingEmployeeVisits(CommonUtils.getLoggedUserId(principal));
 		model.addAttribute(ModelAttr.VISITS, upcomingEmployeeVisits);

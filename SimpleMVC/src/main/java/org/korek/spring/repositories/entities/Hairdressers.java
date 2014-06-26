@@ -18,6 +18,10 @@ import org.korek.spring.controllers.models.NewPlace;
 	@NamedQuery(
 			name = Hairdressers.ALL_WITH_AT_LEAST_1_EMPLOYEE,
 			query = "from Hairdressers where currentEmployees > 0 order by name"
+	),
+	@NamedQuery(
+			name = Hairdressers.ALL_WITH_AVAILABLE_VACANCY,
+			query = "from Hairdressers where currentEmployees < maxEmployees order by name"
 	)
 })
 
@@ -25,7 +29,9 @@ import org.korek.spring.controllers.models.NewPlace;
 public class Hairdressers
 {
 
-	public static final String ALL_WITH_AT_LEAST_1_EMPLOYEE = "Hairdressers1";
+	public static final String ALL_WITH_AT_LEAST_1_EMPLOYEE = "ALL_WITH_AT_LEAST_1_EMPLOYEE";
+
+	public static final String ALL_WITH_AVAILABLE_VACANCY = "ALL_WITH_AVAILABLE_VACANCY";
 
 	@Id
 	@GeneratedValue

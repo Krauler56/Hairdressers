@@ -10,7 +10,7 @@
 	<div th:include="include/fragment :: header"></div>
 	<div id="content">
 		<div sec:authorize="hasRole('ROLE_ADMIN')">
-			<h3 th:text="#{add_new_place}">Add new place</h3>
+			<h3 th:text="#{add_new_place}">Add new place</h3><br/>
 			<form action="#" th:action="@{/addNewPlace}" th:object="${newPlace}" method="post">
 				<table>
 					<tr>

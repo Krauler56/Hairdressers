@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-	<title>Home</title>
+	<title>Login</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="stylesheet" type="text/css" media="all" href="../../css/moj.css" th:href="@{/css/moj.css}" />
 	<script type="text/javascript" th:src="@{/js/moj.js}"></script>
@@ -41,6 +41,7 @@
 					<td th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="error"></td>
 				</tr>
 			</table>
+			<p th:if="${registered == true}" th:utext="#{registered}" class="greenText"></p>
 			<br /> 
 			<input class="button orange" type="submit" th:value="#{register}" />
 

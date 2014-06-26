@@ -30,18 +30,13 @@ public class HairdressersManager implements IHairdressersManager
 	@Override
 	public List<WorkPlace> getAllWorkPlaceWithAvailableVacancy()
 	{
-
-		List<Hairdressers> hairdressersDB = hairdressersDAO.findAll();
-
+		List<Hairdressers> hairdressersDB = hairdressersDAO.getAllWithAvailableVacancy();
+		
 		List<WorkPlace> allPlaces = Lists.newArrayListWithCapacity(hairdressersDB.size());
 
 		for (Hairdressers hairdressers : hairdressersDB)
 		{
-			if (hairdressers.getEmployees().size() < hairdressers.getMaxEmployees())
-			{
-				allPlaces.add(new WorkPlace(hairdressers.getId(), hairdressers.getName()));
-			}
-
+			allPlaces.add(new WorkPlace(hairdressers.getId(), hairdressers.getName()));
 		}
 
 		return allPlaces;
@@ -126,8 +121,6 @@ public class HairdressersManager implements IHairdressersManager
 		hairdressersDAO.save(hairdressers);
 	}
 
-	
-
 	@Override
 	public void saveChanges(WorkPlace workPlaceOld, WorkPlace workPlace) throws PlaceException
 	{
@@ -151,9 +144,7 @@ public class HairdressersManager implements IHairdressersManager
 			{
 				SynchronizationProvider.relaseSynchoObj(Hairdressers.class, placeID);
 			}
-
 		}
-
 	}
 
 	private void validChanges(WorkPlace workPlace, Hairdressers hairdressersDB) throws PlaceException

@@ -10,19 +10,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface IVisitManager
 {
-	@Transactional
-	SearchingForVisitResult checkForVisit(NewVisit newVisit) throws NewVisitException;
-	
-	@Transactional
-	boolean bookVisit(NewVisit newVisit, Long suggestedDateID);
-	
-	@Transactional
+	@Transactional(readOnly = true)
 	List<EmployeeVisit> getAllPlaceVisit(long placeID);
-	
-	@Transactional
+
+	@Transactional(readOnly = true)
 	List<EmployeeVisit> getPastPlaceVisit(long placeID);
-	
-	@Transactional
+
+	@Transactional(readOnly = true)
 	List<EmployeeVisit> getUpcomingPlaceVisit(long placeID);
 
+	@Transactional(readOnly = true)
+	SearchingForVisitResult checkForVisit(NewVisit newVisit) throws NewVisitException;
+
+	@Transactional
+	boolean bookVisit(NewVisit newVisit, Long suggestedDateID);
 }

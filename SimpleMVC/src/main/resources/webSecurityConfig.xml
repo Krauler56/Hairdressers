@@ -22,7 +22,7 @@
 		<form-login 
 					login-page="/login" 
 					authentication-failure-url="/login-error" 
-					default-target-url="/"
+					default-target-url="/home"
 					always-use-default-target="true" 
 					/>
 

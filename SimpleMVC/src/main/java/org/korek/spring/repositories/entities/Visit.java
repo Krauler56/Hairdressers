@@ -98,43 +98,43 @@ import org.hibernate.annotations.NamedQuery;
 public class Visit
 {
 
-	public static final String IS_DATE_AVAILABLE_EMPLOYEE = "SUPER_FAJNIE";
+	public static final String IS_DATE_AVAILABLE_EMPLOYEE =  "IS_DATE_AVAILABLE_EMPLOYEE";
 
-	public static final String GET_ALL_EMPLOYEE_VISITS_AFTER_DATE = "SUPER_FAJNIE2";
+	public static final String GET_ALL_EMPLOYEE_VISITS_AFTER_DATE = "GET_ALL_EMPLOYEE_VISITS_AFTER_DATE";
 
-	public static final String GET_CLIENT_VISITS = "SUPER_FAJNIE3";
+	public static final String GET_CLIENT_VISITS = "GET_CLIENT_VISITS";
 	
-	public static final String GET_CLIENT_VISITS_BEFORE = "SUPER_FAJNIE4";
+	public static final String GET_CLIENT_VISITS_BEFORE = "GET_CLIENT_VISITS_BEFORE";
 	
-	public static final String GET_CLIENT_VISITS_AFTER = "SUPER_FAJNIE5";
+	public static final String GET_CLIENT_VISITS_AFTER = "GET_CLIENT_VISITS_AFTER";
 	
-	public static final String GET_EMPLOYEE_VISITS_BEFORE = "SUPER_FAJNIE6";
+	public static final String GET_EMPLOYEE_VISITS_BEFORE = "GET_EMPLOYEE_VISITS_BEFORE";
 	
-	public static final String GET_EMPLOYEE_VISITS_AFTER = "SUPER_FAJNIE7";
+	public static final String GET_EMPLOYEE_VISITS_AFTER = "GET_EMPLOYEE_VISITS_AFTER";
 
-	public static final String GET_EMPLOYEES_VISITS = "SUPER_FAJNIE8";
+	public static final String GET_EMPLOYEES_VISITS = "GET_EMPLOYEES_VISITS";
 
-	public static final String GET_EMPLOYEE_VISITS = "SUPER_FAJNIE9";
+	public static final String GET_EMPLOYEE_VISITS = "GET_EMPLOYEE_VISITS";
 
-	public static final String GET_EMPLOYEES_VISITS_BEFORE = "SUPER_FAJNIE10";
+	public static final String GET_EMPLOYEES_VISITS_BEFORE = "GET_EMPLOYEES_VISITS_BEFORE";
 	
-	public static final String GET_EMPLOYEES_VISITS_AFTER = "SUPER_FAJNIE11";
+	public static final String GET_EMPLOYEES_VISITS_AFTER = "GET_EMPLOYEES_VISITS_AFTER";
 
-	public static final String GET_CLIENT_VISIT_TO_SENT_EMAIL = "SUPER_FAJNIE12";
+	public static final String GET_CLIENT_VISIT_TO_SENT_EMAIL = "GET_CLIENT_VISIT_TO_SENT_EMAIL";
 	
-	public static final String HAS_ANY_UPCOMING_VISITS = "SUPER_FAJNIE13";
+	public static final String HAS_ANY_UPCOMING_VISITS = "HAS_ANY_UPCOMING_VISITS";
 
-	public static final String GET_PLACE_VISITS = "SUPER_FAJNIE14";
+	public static final String GET_PLACE_VISITS = "GET_PLACE_VISITS";
 	
-	public static final String GET_PLACE_VISITS_BEFORE = "SUPER_FAJNIE15";
+	public static final String GET_PLACE_VISITS_BEFORE = "GET_PLACE_VISITS_BEFORE";
 	
-	public static final String GET_PLACE_VISITS_AFTER = "SUPER_FAJNIE16";
+	public static final String GET_PLACE_VISITS_AFTER = "GET_PLACE_VISITS_AFTER";
 
-	public static final String IS_DATE_AVAILABLE_CLIENT = "SUPER_FAJNIE17";
+	public static final String IS_DATE_AVAILABLE_CLIENT = "IS_DATE_AVAILABLE_CLIENT";
 
-	public static final String GET_EMPLOYEE_VISITS_BETWEEN = "SUPER_FAJNIE18";
+	public static final String GET_EMPLOYEE_VISITS_BETWEEN = "GET_EMPLOYEE_VISITS_BETWEEN";
 
-	public static final String GET_VISITS_WHICH_COINCIDES_WITHDATE = "SUPER_FAJNIE19";
+	public static final String GET_VISITS_WHICH_COINCIDES_WITHDATE = "GET_VISITS_WHICH_COINCIDES_WITHDATE";
 	
 	@Id
 	@GeneratedValue

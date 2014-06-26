@@ -11,29 +11,30 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface IEmployeeManager
 {
-	@Transactional
-	boolean addEmployee(NewEmployee newEmployee) throws Exception;
 	
-	@Transactional
+	@Transactional(readOnly = true)
 	List<EmployeeTO> getAllEmployees();
 	
-	@Transactional
+	@Transactional(readOnly = true)
 	EmployeeTO getEmployeeTO(long employeeID);
+	
+	@Transactional(readOnly = true)
+	List<EmployeeVisit> getAllEmployeeVisits(long id);
+
+	@Transactional(readOnly = true)
+	List<EmployeeVisit> getUpcomingEmployeeVisits(long id);
+	
+	@Transactional(readOnly = true)
+	List<EmployeeVisit> getPastEmployeeVisits(long id);
+
+	@Transactional(readOnly = true)
+	WorkPlace getEmployeesWorkPlace(long employeeID);
 	
 	@Transactional
 	boolean saveChanges(EmployeeTO employeeOld, EmployeeTO employee) throws EditEmployeeException;
-
-	@Transactional
-	List<EmployeeVisit> getAllEmployeeVisits(long id);
-
-	@Transactional
-	List<EmployeeVisit> getUpcomingEmployeeVisits(long id);
 	
 	@Transactional
-	List<EmployeeVisit> getPastEmployeeVisits(long id);
-
-	@Transactional
-	WorkPlace getEmployeesWorkPlace(long employeeID);
+	boolean addEmployee(NewEmployee newEmployee) throws Exception;
 	
 	@Transactional
 	void confirmPastVisit(long visitID, long employeeID);

@@ -56,12 +56,11 @@ public class LoginRegisterController
 	}
 
 	@RequestMapping(value = RequestMap.REGISTER, method = RequestMethod.POST)
-	public String processForm(@Valid @ModelAttribute(value = ModelAttr.NEW_CLIENT) NewClient newClient, BindingResult bindingResult, RedirectAttributes attr)
+	public String register(@Valid @ModelAttribute(value = ModelAttr.NEW_CLIENT) NewClient newClient, BindingResult bindingResult, RedirectAttributes attr)
 	{
 
 		if (bindingResult.hasErrors())
 		{
-			
 			CommonUtils.handleBindingErrors(ModelAttr.NEW_CLIENT, bindingResult, attr, newClient);
 
 			return "redirect:/" + Views.LOGIN;
@@ -79,7 +78,8 @@ public class LoginRegisterController
 			return "redirect:/" + Views.LOGIN;
 		}
 
-		return "redirect:/";
+		attr.addFlashAttribute(ModelAttr.REGISTERED, true);
+		return "redirect:/" + Views.LOGIN;
 	}
 
 	private void processLogin(Model model)

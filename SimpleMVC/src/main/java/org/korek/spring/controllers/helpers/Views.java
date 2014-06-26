@@ -10,7 +10,7 @@ public class Views
 
 	public static final String DETAILS_EMPLOYEE = "common/employee";
 
-	public static final String HOME = "/";
+	public static final String HOME = "home";
 
 	public static final String LOGIN = "login";
 

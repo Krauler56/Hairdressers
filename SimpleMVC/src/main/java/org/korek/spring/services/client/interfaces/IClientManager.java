@@ -12,30 +12,30 @@ import org.springframework.transaction.annotation.Transactional;
 public interface IClientManager
 {
 	
-	@Transactional
-	List<ClientVisit> getClientVisits(long clientID); 
-	
-	@Transactional
-	List<ClientVisit> getPastClientVisits(long clientID); 
-	
-	@Transactional
-	List<ClientVisit> getUpcomingClientVisits(long clientID); 
-	
+	@Transactional(readOnly = true)
+	ClientTO getClient(long clientID);
+
+	@Transactional(readOnly = true)
+	List<ClientVisit> getClientVisits(long clientID);
+
+	@Transactional(readOnly = true)
+	List<ClientVisit> getPastClientVisits(long clientID);
+
+	@Transactional(readOnly = true)
+	List<ClientVisit> getUpcomingClientVisits(long clientID);
+
 	@Transactional
 	void registerNewClient(NewClient newClient);
 
 	@Transactional
-	ClientTO getClient(long clientID);
+	boolean saveChanges(ClientTO clientOld, ClientTO client);
 
 	@Transactional
-	boolean saveChanges(ClientTO clientOld, ClientTO client);
-	
-	@Transactional
 	void cancelVisitClient(long visitID, long clientID);
-	
+
 	@Transactional
 	void rateVisit(RateVisit rateVisit, long clientID, long visitID);
-	
+
 	@Transactional
 	List<Email> getEmailsToSend();
 }

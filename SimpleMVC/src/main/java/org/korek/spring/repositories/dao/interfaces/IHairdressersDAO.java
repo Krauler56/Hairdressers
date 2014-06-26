@@ -7,7 +7,8 @@ import org.korek.spring.repositories.entities.Hairdressers;
 
 public interface IHairdressersDAO extends IBaseDAO<Hairdressers> 
 {
-
 	List<Hairdressers> getAllPlacesWithAtLeastOneEmployee();
+
+	List<Hairdressers> getAllWithAvailableVacancy();
 
 }

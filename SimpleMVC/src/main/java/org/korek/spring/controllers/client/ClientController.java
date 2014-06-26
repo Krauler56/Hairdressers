@@ -98,7 +98,7 @@ public class ClientController
 	}
 
 	@RequestMapping(value = RequestMap.CLIENT_CHECK_VISIT_POST, method = RequestMethod.POST)
-	public String checkForVisit(@ModelAttribute(value = "newVisit") NewVisit newVisit, HttpSession session, Principal principal, RedirectAttributes attr)
+	public String checkForVisitPost(@ModelAttribute(value = "newVisit") NewVisit newVisit, HttpSession session, Principal principal, RedirectAttributes attr)
 	{
 
 		long placeID = (long) session.getAttribute(SessionAttr.NEW_VISIT_PLACE_ID);
@@ -123,7 +123,7 @@ public class ClientController
 	}
 
 	@RequestMapping(value = RequestMap.CLIENT_CONFIRM_VISIT, method = RequestMethod.GET)
-	public String yyyy(Model model, @PathVariable("id") long placeID)
+	public String confirmVisit(Model model, @PathVariable("id") long placeID)
 	{
 		if (!model.containsAttribute(ModelAttr.DATE_AVAIABLE))
 		{
@@ -153,7 +153,7 @@ public class ClientController
 	}
 
 	@RequestMapping(value = RequestMap.CLIENT_PROFILE, method = RequestMethod.GET)
-	public String clientEditProfile(Model model, Principal principal, HttpSession session)
+	public String editProfile(Model model, Principal principal, HttpSession session)
 	{
 		if (!model.containsAttribute(ModelAttr.CLIENT))
 		{
@@ -166,7 +166,7 @@ public class ClientController
 	}
 
 	@RequestMapping(value = RequestMap.CLIENT_EDIT_PROFILE, method = RequestMethod.POST)
-	public String editProfile(@Valid @ModelAttribute(value = ModelAttr.CLIENT) ClientTO client, BindingResult bindingResult, HttpSession session, RedirectAttributes attr)
+	public String editProfilePost(@Valid @ModelAttribute(value = ModelAttr.CLIENT) ClientTO client, BindingResult bindingResult, HttpSession session, RedirectAttributes attr)
 	{
 		if (bindingResult.hasErrors())
 		{
@@ -187,7 +187,7 @@ public class ClientController
 	}
 
 	@RequestMapping(value = RequestMap.CLIENT_VISIT_UPCOMING, method = RequestMethod.GET)
-	public String showUpcomingVisits(Model model, Principal principal)
+	public String upcomingVisits(Model model, Principal principal)
 	{
 		List<ClientVisit> clientVisits = clientManager.getUpcomingClientVisits(CommonUtils.getLoggedUserId(principal));
 		model.addAttribute(ModelAttr.CLIENT_VISITS, clientVisits);
@@ -196,7 +196,7 @@ public class ClientController
 	}
 
 	@RequestMapping(value = RequestMap.CLIENT_VISIT_PAST, method = RequestMethod.GET)
-	public String showPastVisits(Model model, Principal principal)
+	public String pastVisits(Model model, Principal principal)
 	{
 		List<ClientVisit> clientPastVisits = clientManager.getPastClientVisits(CommonUtils.getLoggedUserId(principal));
 		model.addAttribute(ModelAttr.CLIENT_PAST_VISITS, clientPastVisits);

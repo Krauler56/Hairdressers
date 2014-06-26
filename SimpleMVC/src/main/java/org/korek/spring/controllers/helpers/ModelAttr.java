@@ -83,6 +83,6 @@ public class ModelAttr
 
 	public static final String NO_PLACES_TO_SELECT = "noPlacesToSelect";
 
+	public static final String REGISTERED = "registered";
 
-//	public static final String = "";
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-	<title>Home</title>
+	<title>Add new employee</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="stylesheet" type="text/css" media="all" href="../../css/moj.css" th:href="@{/css/moj.css}" />
 	<script type="text/javascript" th:src="@{/js/moj.js}"></script>
@@ -41,7 +41,7 @@
 				<tr>
 					<td th:text="#{work_place}">Place of work</td>
 					<td><select th:field="*{idWorkPlace}">
-							<option value="0">None</option>
+							<option value="0" th:text="#{none}">None</option>
 							<option th:each="place : ${allPlacesWithVacancy}" th:value="${place.id}" th:text="${place.name}"></option>
 					</select></td>
 				</tr>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-	<title>Home</title>
+	<title>All hair salons</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<script type="text/javascript" th:src="@{/js/jquery-2.1.1.min.js}"></script> 
 	<script type="text/javascript" th:src="@{/js/jquery.tablesorter.min.js}"></script> 
@@ -16,7 +16,7 @@
 		<div class="content_nav">
 			<a class="button orange small" th:href="@{/admin/place/new}" th:text="#{create_new_place}">Create new place</a>
 		</div>
-		<h3 th:text="#{all_places}">All places</h3>
+		<h3 th:text="#{all_places}">All hair salons</h3>
 		<div th:if="${not #lists.isEmpty(allPlaces)}">
 			<table class="tablesorter tables" id="places">
 				<thead>

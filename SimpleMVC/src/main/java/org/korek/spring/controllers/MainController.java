@@ -55,10 +55,10 @@ public class MainController
 	@Autowired
 	IEmployeeManager employeeManager;
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = RequestMap.HOME, method = RequestMethod.GET)
 	public String home(Locale locale, Model model)
 	{
-		return "home";
+		return Views.HOME;
 	}
 
 	@PreAuthorize("isAuthenticated()")
@@ -135,15 +135,5 @@ public class MainController
 
 		return Views.DETAILS_EMPLOYEE;
 	}
-
-	/* temp */
-
-	@ModelAttribute(value = "newEmployee")
-	public NewEmployee createNewEmployee()
-	{
-		return new NewEmployee();
-	}
-
-	/* temp */
 
 }
