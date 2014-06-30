@@ -16,7 +16,6 @@ import org.korek.spring.repositories.entities.Employee;
 import org.korek.spring.repositories.entities.Visit;
 import org.korek.spring.services.client.interfaces.IClientManager;
 import org.korek.spring.services.common.interfaces.IPassEncoder;
-import org.korek.spring.utils.CommonUtils;
 import org.korek.spring.utils.DateParser;
 import org.korek.spring.utils.Email;
 import org.korek.spring.utils.SynchronizationProvider;

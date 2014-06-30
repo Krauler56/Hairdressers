@@ -4,7 +4,6 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.javatuples.Pair;
-import org.korek.spring.controllers.admin.AdminController;
 
 import com.google.common.collect.Maps;
 

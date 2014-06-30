@@ -34,6 +34,7 @@ date=
 date_avaiable=
 date_before_now=
 date_not_avaiable=
+default_error_msg=
 delete_visit_text=
 details=
 door_number=
