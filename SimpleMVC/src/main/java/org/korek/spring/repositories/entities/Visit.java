@@ -67,7 +67,7 @@ import org.hibernate.annotations.NamedQuery;
 	),
 	@NamedQuery(
 			name = Visit.GET_CLIENT_VISIT_TO_SENT_EMAIL,
-			query = "from Visit where client.email <> '' and startDate <= :date and notificationSent = false" 
+			query = "from Visit where client.email <> '' and startDate <= :date and startDate >= :now and notificationSent = false" 
 	),
 	@NamedQuery(
 			name = Visit.HAS_ANY_UPCOMING_VISITS,

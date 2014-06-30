@@ -2,12 +2,16 @@ package org.korek.spring.utils;
 
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.javatuples.Pair;
+import org.korek.spring.controllers.admin.AdminController;
 
 import com.google.common.collect.Maps;
 
 public class SynchronizationProvider
 {
+	
+	private static final Logger log = Logger.getLogger(SynchronizationProvider.class);
 
 	private static Map<Pair<Class<?>, Long>, Pair<Object, Integer>> synchros = Maps.newHashMap();
 
@@ -43,7 +47,6 @@ public class SynchronizationProvider
 		
 		if (value != null)
 		{
-			
 			Integer number = value.getValue1();
 			if(number > 1)
 			{
@@ -55,6 +58,10 @@ public class SynchronizationProvider
 			{
 				synchros.remove(key);
 			}
+		}
+		else
+		{
+			log.error("Relased synchro which isn't there for key: " + key);
 		}
 	}
 

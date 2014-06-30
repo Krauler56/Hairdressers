@@ -1,8 +1,5 @@
 package org.korek.spring.controllers;
 
-import java.util.Date;
-import java.util.Locale;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -55,11 +52,9 @@ public class MainController
 	@Autowired
 	IEmployeeManager employeeManager;
 
-	@RequestMapping(value = RequestMap.HOME, method = RequestMethod.GET)
+	@RequestMapping(value = {RequestMap.HOME, "/"}, method = RequestMethod.GET)
 	public String home(Model model)
 	{
-		model.addAttribute("date", new Date());
-		
 		return Views.HOME;
 	}
 
@@ -112,7 +107,6 @@ public class MainController
 	public String clientDetails(Model model, @PathVariable("id") long id)
 	{
 		ClientTO client = clientManager.getClient(id);
-
 		model.addAttribute(ModelAttr.CLIENT, client);
 
 		return Views.DETAILS_CLIENT;
@@ -123,7 +117,6 @@ public class MainController
 	{
 
 		WorkPlace workPlace = hairdressersManager.getWorkPlaceDetails(id);
-
 		model.addAttribute(ModelAttr.WORK_PLACE, workPlace);
 
 		return Views.DETAILS_PLACE;

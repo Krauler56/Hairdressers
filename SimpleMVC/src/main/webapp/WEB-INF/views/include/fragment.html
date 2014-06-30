@@ -277,50 +277,50 @@
 			<a th:href="@{/language/pl_PL}" onclick="language(this,event);"><img alt="" src="" th:src="@{/css/pl.png}" /></a>
 			
 			<div sec:authorize="isAuthenticated()">
-			<ul id="list-nav" class="rounded white">
-				<li >
-					<a class="button blue" href="#" th:href="@{/home}" th:text="#{home}">Home</a>
-				</li>
-				
-				<li sec:authorize="hasRole('ROLE_USER')" >
-					<a class="button blue" href="#" th:href="@{/client/profile}" th:text="#{my_profile}">My profile</a>
-				</li>
-				
-				<li sec:authorize="hasRole('ROLE_USER')" >
-					<a class="button blue" href="#" th:href="@{/client/visit/upcoming}" th:text="#{my_visits}">My visits</a>
-				</li>
-
-				<li sec:authorize="hasAnyRole('ROLE_EMPLOYEE', 'ROLE_ADMIN')">
-					<a class="button blue" href="#" th:href="@{/employee/profile}" th:text="#{my_profile}">My profile</a>
-				</li>
-				
-				<li sec:authorize="hasAnyRole('ROLE_EMPLOYEE', 'ROLE_ADMIN')">
-					<a class="button blue" href="#" th:href="@{/employee/visit/upcoming}" th:text="#{my_visits}">My visits</a>
-				</li>
-				
-				<li sec:authorize="hasRole('ROLE_ADMIN')">
-					<a class="button blue" href="#" th:href="@{/admin/employees}" th:text="#{employees}">Employees</a>
-				</li>
-				
-				<li sec:authorize="hasRole('ROLE_ADMIN')">
-					<a class="button blue" href="#" th:href="@{/admin/place/all}" th:text="#{places}">Places</a>
-				</li>
-				
-				<li >
-					<a class="button blue" href="#" th:href="@{/j_spring_security_logout}" th:text="#{log_out}">Log out</a>
-				</li>
-			</ul>
+				<ul id="list-nav" class="rounded white">
+					<li >
+						<a class="button blue" href="#" th:href="@{/home}" th:text="#{home}">Home</a>
+					</li>
+					
+					<li sec:authorize="hasRole('ROLE_USER')" >
+						<a class="button blue" href="#" th:href="@{/client/profile}" th:text="#{my_profile}">My profile</a>
+					</li>
+					
+					<li sec:authorize="hasRole('ROLE_USER')" >
+						<a class="button blue" href="#" th:href="@{/client/visit/upcoming}" th:text="#{my_visits}">My visits</a>
+					</li>
+	
+					<li sec:authorize="hasAnyRole('ROLE_EMPLOYEE', 'ROLE_ADMIN')">
+						<a class="button blue" href="#" th:href="@{/employee/profile}" th:text="#{my_profile}">My profile</a>
+					</li>
+					
+					<li sec:authorize="hasAnyRole('ROLE_EMPLOYEE', 'ROLE_ADMIN')">
+						<a class="button blue" href="#" th:href="@{/employee/visit/upcoming}" th:text="#{my_visits}">My visits</a>
+					</li>
+					
+					<li sec:authorize="hasRole('ROLE_ADMIN')">
+						<a class="button blue" href="#" th:href="@{/admin/employees}" th:text="#{employees}">Employees</a>
+					</li>
+					
+					<li sec:authorize="hasRole('ROLE_ADMIN')">
+						<a class="button blue" href="#" th:href="@{/admin/place/all}" th:text="#{places}">Places</a>
+					</li>
+					
+					<li >
+						<a class="button blue" href="#" th:href="@{/j_spring_security_logout}" th:text="#{log_out}">Log out</a>
+					</li>
+				</ul>
 			</div>
 			<div sec:authorize="isAnonymous()" id="login_form">
-				<form class="whiteText" th:action="@{/j_spring_security_check}" method="post">
+				<form class="whiteText" th:action="@{/process_login}" method="post">
 					<table>
 						<tr>
 							<td th:text="#{login}">Login</td>
 							<td th:text="#{password}">Password</td>
 						</tr>
 						<tr>
-							<td><input type="text" id="j_username" name="j_username" /></td>
-							<td><input type="password" id="j_password" name="j_password" /></td>
+							<td><input type="text" id="login" name="login" /></td>
+							<td><input type="password" id="password" name="password" /></td>
 						</tr>
 					</table>
 					<p th:if="${loginError}" class="error" th:text="#{wrong_login_pass}">Wrong login or password</p>

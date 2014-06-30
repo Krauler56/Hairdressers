@@ -1,12 +1,10 @@
 package org.korek.spring.web.config;
 
+import java.util.Locale;
 import java.util.TimeZone;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-
-import org.springframework.context.annotation.Configuration;
 
 public class DefaultTimeZone implements ServletContextListener
 {
@@ -16,6 +14,8 @@ public class DefaultTimeZone implements ServletContextListener
 	{
 		TimeZone timeZone = TimeZone.getTimeZone("Europe/London");
 		TimeZone.setDefault(timeZone);
+		
+		Locale.setDefault(new Locale("en", "GB"));
 	}
 
 	@Override

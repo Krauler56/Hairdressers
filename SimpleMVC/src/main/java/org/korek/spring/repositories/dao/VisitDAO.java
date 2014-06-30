@@ -193,6 +193,7 @@ public class VisitDAO extends BaseDAO<Visit> implements IVisitDAO
 		@SuppressWarnings("unchecked")
 		List<Visit> list = getCurrentSession().getNamedQuery(Visit.GET_CLIENT_VISIT_TO_SENT_EMAIL)
 			.setTimestamp("date", CommonUtils.getTommorow())
+			.setTimestamp("now", new Date())
 			.list();
 		
 		return list;

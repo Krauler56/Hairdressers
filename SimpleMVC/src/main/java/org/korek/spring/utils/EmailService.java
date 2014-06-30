@@ -24,11 +24,10 @@ public class EmailService
 
 	private EmailSender emailSender = new EmailSender();
 	
-	@Scheduled(fixedRate =  10 * 60 * 1000)
+	@Scheduled(fixedRate = 10 * 60 * 1000)
 	public void run()
 	{
 		List<Email> emailsToSend = clientManager.getEmailsToSend();
-		
 		for (Email email : emailsToSend)
 		{
 			try

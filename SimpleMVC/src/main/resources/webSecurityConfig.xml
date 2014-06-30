@@ -19,14 +19,17 @@
 		<intercept-url pattern="/register" access="isAnonymous()" />
 		<intercept-url pattern="/**" access="isAuthenticated()" />
 
-		<form-login 
-					login-page="/login" 
+		<form-login login-page="/login" 
 					authentication-failure-url="/login-error" 
 					default-target-url="/home"
 					always-use-default-target="true" 
+					login-processing-url="/process_login"
+					password-parameter="password"
+					username-parameter="login"
 					/>
 
 		<logout delete-cookies="JSESSIONID"  /> 
+		
 		
 		<session-management>
         	<concurrency-control max-sessions="1" expired-url="/login-expired" />

@@ -1,7 +1,6 @@
 package org.korek.spring.services.common;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -27,6 +26,7 @@ import org.korek.spring.services.common.helpers.exceptions.StartDateBeforeNowExc
 import org.korek.spring.services.common.helpers.exceptions.base.NewVisitException;
 import org.korek.spring.services.common.interfaces.IVisitManager;
 import org.korek.spring.utils.CommonUtils;
+import org.korek.spring.utils.DateParser;
 import org.korek.spring.utils.SynchronizationProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +41,7 @@ public class VisitManager implements IVisitManager
 
 	private static final Logger logger = LoggerFactory.getLogger(VisitManager.class);
 
-	private static final SimpleDateFormat DATE_FORMATER = new SimpleDateFormat("yyyy-MM-ddHH:mm");
+	private static final DateParser DATE_PARSER = new DateParser("yyyy-MM-ddHH:mm");
 
 	@Autowired
 	IVisitDAO visitDAO;
@@ -58,7 +58,6 @@ public class VisitManager implements IVisitManager
 	@Override
 	public SearchingForVisitResult checkForVisit(NewVisit newVisit) throws NewVisitException
 	{
-
 		/* prepare data */
 		long employeeID = newVisit.getEmployeeID();
 		long clientID = newVisit.getClientID();
@@ -81,12 +80,6 @@ public class VisitManager implements IVisitManager
 			Hairdressers hairdressers = hairdressersDAO.load(workPlaceID);
 			OpenTime openTime = new OpenTime(hairdressers);
 			List<SuggestedDate> dates = searchForNearestAvaiableDates(startDate, finishDate, clientID, employeeID, workPlaceID, openTime);
-			long id = 1;
-			for (SuggestedDate suggestedDate : dates)
-			{
-				suggestedDate.setId(id++);
-			}
-			
 			searchingForVisitResult.setSuggestedDates(dates);
 		}
 
@@ -176,6 +169,12 @@ public class VisitManager implements IVisitManager
 		{
 			Pair<SuggestedDate,SuggestedDate> dates = checkEmployeeForNearestAvaiableDates(employeeID, startDate, finishDate, openTime);
 			addSuggestedDateToList(suggestedDates, dates);
+		}
+		
+		long id = 1;
+		for (SuggestedDate suggestedDate : suggestedDates)
+		{
+			suggestedDate.setId(id++);
 		}
 
 		return suggestedDates;
@@ -423,7 +422,7 @@ public class VisitManager implements IVisitManager
 		Date startDate = null;
 		try
 		{
-			startDate = DATE_FORMATER.parse(date + startTime);
+			startDate = DATE_PARSER.parse(date + startTime);
 		}
 		catch (ParseException e)
 		{

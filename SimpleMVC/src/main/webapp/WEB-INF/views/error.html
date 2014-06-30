@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+	<title>Home</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" media="all" href="../../css/moj.css" th:href="@{/css/moj.css}" />
+	<script type="text/javascript" th:src="@{/js/moj.js}"></script>
+</head>
+<body>
+	<div th:include="include/fragment :: header"></div>
+	<div id="content">
+		<br/>
+		<p th:text="#{default_error_msg}" class="error"></p>
+		<br/>
+	</div>
+	
+</body>
+</html>

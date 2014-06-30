@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.korek.spring.controllers.models.WorkPlace;
 import org.korek.spring.repositories.entities.Employee;
@@ -18,7 +19,7 @@ import com.google.common.collect.Lists;
 public class CommonUtils
 {
 
-	public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+	public static final DateParser DATE_PARSER = new DateParser("yyyy-MM-dd");
 	
 	private static final String BINDING_BASE = "org.springframework.validation.BindingResult.";
 
@@ -91,16 +92,16 @@ public class CommonUtils
 		return ids;
 	}
 
-	public static String getDateAsString(Date date, String pattern)
-	{
-		SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
-		
-		return dateFormat.format(date);
-	}
+//	public static String getDateAsString(Date date, String pattern)
+//	{
+//		SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
+//		
+//		return dateFormat.format(date);
+//	}
 	
 	public static String getDateAsString(Date date)
 	{
-		return DATE_FORMAT.format(date);
+		return DATE_PARSER.format(date);
 	}
 
 	public static Date getTommorow()

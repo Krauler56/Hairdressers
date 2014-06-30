@@ -17,6 +17,7 @@ import org.korek.spring.repositories.entities.Visit;
 import org.korek.spring.services.client.interfaces.IClientManager;
 import org.korek.spring.services.common.interfaces.IPassEncoder;
 import org.korek.spring.utils.CommonUtils;
+import org.korek.spring.utils.DateParser;
 import org.korek.spring.utils.Email;
 import org.korek.spring.utils.SynchronizationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,8 @@ public class ClientManager implements IClientManager
 	@Autowired
 	IPassEncoder passEncoder;
 	
+	private final DateParser dateParser = new DateParser("HH:mm  dd-MM-YYYY");
+
 	@Override
 	public List<ClientVisit> getClientVisits(long clientID)
 	{
@@ -181,9 +184,10 @@ public class ClientManager implements IClientManager
 		return emails;
 	}
 	
+	
 	private String prepareText(Visit visit)
 	{
-		String dateAsString = CommonUtils.getDateAsString(visit.getStartDate().getTime(), "HH:mm  dd-MM-YYYY");
+		String dateAsString = dateParser.format(visit.getStartDate().getTime());
 		
 		return "Visit date: " + dateAsString + "\nEmployee: " + visit.getEmployee().getFirstName() + " " + visit.getEmployee().getLastName();
 	}
